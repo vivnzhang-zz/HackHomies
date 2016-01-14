@@ -12,6 +12,12 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.profile.helpers({
+  username: function () {
+    return Meteor.user() && Meteor.user().username;
+  }
+});
+
 
 }
 
