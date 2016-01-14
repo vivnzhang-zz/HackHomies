@@ -9,16 +9,17 @@
     </header>
 
     {{> loginButtons}}
+
+    {{#if currentUser}}
+      {{> createProfile}}
+    {{/if}}
  
     <ul>
       {{#each profiles}}
-        {{> profile}}
+        {{> fullprofile}}
       {{/each}}
     </ul>
   </div>
+  {{>yield}}
 </body>
-
-<template name="profile">
-  <li>{{text}}</li>
-</template>
 

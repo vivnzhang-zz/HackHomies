@@ -1,3 +1,20 @@
 <template name="login">
   <p>This is the login page</p>
+  <div class="container">
+    <header>
+      <h1>Welcome to HackHomies!</h1>
+    </header>
+
+    {{> loginButtons}}
+
+    {{#if currentUser}}
+      {{> createProfile}}
+    {{/if}}
+ 
+    <ul>
+      {{#each profiles}}
+        {{> fullprofile}}
+      {{/each}}
+    </ul>
+  </div>
 </template>

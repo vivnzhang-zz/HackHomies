@@ -12,11 +12,21 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.profile.helpers({
-  username: function () {
-    return Meteor.user() && Meteor.user().username;
-  }
-});
+  // Template.profile.helpers({
+  //   username: function () {
+  //     return Meteor.user() && Meteor.user().username;
+  //   }
+  // });
+
+  Template.body.events({
+    'submit .profile': function (event) {
+      Profiles.insert({
+        name: event.target.name.value,
+        school: event.target.school.value,
+        email: event.target.email.value
+      })
+    }
+  });
 
 
 }
@@ -26,3 +36,4 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
+

@@ -1,3 +1,8 @@
 <template name="browse">
-  <p>Browse teammates</p>
+  <h1>Browse teammates</h1>
+  <ul>
+      {{#each profiles}}
+        {{> fullprofile}}
+      {{/each}}
+  </ul>
 </template>
