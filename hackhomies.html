@@ -1,0 +1,24 @@
+<head>
+  <title>HackHomies</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Welcome to HackHomies!</h1>
+    </header>
+
+    {{> loginButtons}}
+ 
+    <ul>
+      {{#each profiles}}
+        {{> profile}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="profile">
+  <li>{{text}}</li>
+</template>
+
