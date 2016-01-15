@@ -21,6 +21,7 @@ if (Meteor.isClient) {
   Template.login.events({
     'submit .profile': function (event) {
       Profiles.insert({
+        username: Meteor.user().username,
         name: event.target.name.value,
         school: event.target.school.value,
         email: event.target.email.value
