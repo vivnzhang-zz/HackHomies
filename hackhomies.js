@@ -6,7 +6,7 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 
-  Template.body.helpers({
+  Template.login.helpers({
     profiles: function () {
       return Profiles.find({});
     }
@@ -18,7 +18,7 @@ if (Meteor.isClient) {
   //   }
   // });
 
-  Template.body.events({
+  Template.login.events({
     'submit .profile': function (event) {
       Profiles.insert({
         name: event.target.name.value,
