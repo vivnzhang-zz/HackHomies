@@ -6,7 +6,7 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 
-  Template.login.helpers({
+  Template.browse.helpers({
     profiles: function () {
       return Profiles.find({});
     }
