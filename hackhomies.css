@@ -20,7 +20,7 @@ body {
   width: 75%;
   margin: 0 auto;
   min-height: 100%;
-  background: white;
+
 }
 
 #div {
@@ -73,6 +73,7 @@ form {
 
 ul {
     list-style-type: none;
+    font-family: "Lato";
     margin: 0;
     padding: 0;
     width: 25%;
