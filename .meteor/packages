@@ -21,3 +21,4 @@ dotansimha:accounts-ui-angular
 accounts-ui
 iron:router
 blaze-html-templates
+useraccounts:semantic-ui
