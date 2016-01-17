@@ -1,8 +1,6 @@
 
 body {
-  font-family: Lato;
   background-color: #EFF8FB;
-  background-color: #315481;
   background-attachment: fixed;
 
   position: absolute;
@@ -18,15 +16,23 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  float: right;
+  width: 75%;
   margin: 0 auto;
   min-height: 100%;
   background: white;
 }
 
+#div {
+  float: left;
+  width: 200px;
+  height: 100%;
+  background-color: #cc0099
+}
+
 header {
-  background: #d2edf4;
-  background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
+  background: #ff6666;
+  text-align: right;
   padding: 20px 15px 15px 15px;
   position: relative;
 }
@@ -36,6 +42,8 @@ header {
 }
 
 h1 {
+  font-family: "Bellaboo";
+  color: white;
   font-size: 1.5em;
   margin: 0;
   margin-bottom: 10px;
@@ -64,10 +72,16 @@ form {
 }
 
 ul {
-  margin: 0;
-  padding: 0;
-  background: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    height: 100%; /* Full height */
+    position: fixed; /* Make it stick, even on scroll */
+    overflow: auto; /* Enable scrolling if the sidenav has too much content */
 }
+
 
 .delete {
   float: right;
