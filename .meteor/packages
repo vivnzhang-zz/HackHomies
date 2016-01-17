@@ -22,3 +22,4 @@ accounts-ui
 iron:router
 blaze-html-templates
 useraccounts:semantic-ui
+service-configuration
