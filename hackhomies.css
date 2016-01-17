@@ -23,6 +23,12 @@ body {
   min-height: 100%;
 }
 
+.rounded {
+  font-family: "Lato";
+  border-radius: 10px;
+  background-color: #ff6666;
+}
+
 #div {
   float: left;
   width: 200px;
@@ -33,7 +39,7 @@ body {
 header {
   background: #ff6666;
   text-align: right;
-  padding: 20px 15px 15px 15px;
+  padding: 15px 10px 10px 10px;
   position: relative;
 }
 
@@ -42,11 +48,11 @@ header {
 }
 
 h1 {
-  font-family: "Bellaboo";
+  font-family: "Lighthouse Personal Use";
   color: white;
-  font-size: 1.5em;
+  font-size: 40pt;
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   display: inline-block;
   margin-right: 1em;
 }
@@ -57,6 +63,9 @@ form {
   position: relative;
 }
 
+.profile {
+  font-family: "Lato";
+}
 .new-profile input {
   box-sizing: border-box;
   padding: 10px 0;
