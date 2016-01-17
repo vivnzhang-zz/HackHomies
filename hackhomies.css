@@ -1,10 +1,8 @@
 
 body {
-<<<<<<< HEAD
-  font-family: sans-serif;
+  font-family: Lato;
   background-color: #EFF8FB;
   background-color: #315481;
-  background-image: linear-gradient(to bottom, #315481, #918e82 100%);
   background-attachment: fixed;
 
   position: absolute;
