@@ -18,7 +18,7 @@ if (Meteor.isClient) {
   //   }
   // });
 
-  Template.login.events({
+  Template.createProfile.events({
     'submit .profile': function (event) {
       Profiles.insert({
         username: Meteor.user().username,
@@ -26,9 +26,12 @@ if (Meteor.isClient) {
         school: event.target.school.value,
         email: event.target.email.value
       })
-    }
+    }, 
   });
 
+  Template.createProfile.helpers({
+    
+  });
 
 }
 
