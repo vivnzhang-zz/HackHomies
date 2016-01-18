@@ -44,7 +44,7 @@ if (Meteor.isClient) {
       if(Profiles.findOne({_id: Meteor.userId()})){
         return Profiles.findOne({_id: Meteor.userId()});
       } else {
-        return {name: "", school: "", email: ""};
+        return {};
       }
     }
   });
