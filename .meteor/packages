@@ -23,3 +23,5 @@ iron:router
 blaze-html-templates
 useraccounts:semantic-ui
 service-configuration
+semantic:ui
+flemay:less-autoprefixer
