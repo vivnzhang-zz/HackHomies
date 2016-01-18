@@ -35,7 +35,11 @@ if (Meteor.isClient) {
 
   Template.createProfile.helpers({
     data:function(){
-      return Profiles.findOne({_id: Meteor.userId()});
+      if(Profiles.findOne({_id: Meteor.userId()})){
+        return Profiles.findOne({_id: Meteor.userId()});
+      } else {
+        return {name: "", school: "", email: ""};
+      }
     }
   });
   
