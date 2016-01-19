@@ -1,11 +1,4 @@
 Profiles = new Mongo.Collection('profiles');
-Skills = new Mongo.Collection('skills');
-
-Skills.insert([
-  {_id: "java", name: "Java"},
-  {_id: "android", name: "android"},
-  {_id: "HTML", name: "HTML"}
-]);
 
 if (Meteor.isClient) {
 
@@ -26,7 +19,7 @@ if (Meteor.isClient) {
   // });
 
   Template.createProfile.events({
-    'submit .profile': function (event) {
+    'submit': function (event) {
       //console.log("submitted");
       // alert(event.target.skills.value.dropdown('get selected'));
       var myProfile = {
@@ -34,7 +27,8 @@ if (Meteor.isClient) {
         name: event.target.name.value,
         school: event.target.school.value,
         email: event.target.email.value,
-        skills: $('.ui.fluid.dropdown').dropdown('get value')
+        skills: $('.ui.fluid.dropdown').dropdown('get value'),
+        team: []
       }
 
       if(Profiles.findOne({_id: Meteor.userId()}))
@@ -61,6 +55,32 @@ if (Meteor.isClient) {
 
   Template.createProfile.onRendered(function(){
     this.$(".ui.fluid.dropdown").dropdown();
+    
+  });
+
+  // Template.teams.helpers({
+  //   //var myTeam = Profiles.findOne({_id: Meteor.userId()}).teams;
+  //   alert( Profiles.findOne({_id: Meteor.userId()}).teams );
+  //   profiles: function () {
+  //     return Profiles.find({_id: Profiles.findOne({_id: Meteor.userId()}).teams[0]});
+  //   }
+  // });
+
+  Template.fullProfile.events({
+    'submit .addTeammate': function (event) {
+      //alert("button submitted");
+      //alert(event.target.skills.value.dropdown('get selected'));
+      //alert(event.target.name.value);
+      
+      //must have already created profile
+      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      myTeammates.push(event.target.name.value)
+      Profiles.update(
+          {_id: Meteor.userId()},
+          {$set: {team: myTeammates}}
+        );
+
+    }
     
   });
   

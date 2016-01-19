@@ -10,9 +10,9 @@
         <a>Friends</a>
       </div>
       <div class="description">
-        <p>{{school}}</p>
-        <p>{{email}}</p>
-        <p>{{skills}}</p>
+        <p>School: {{school}}</p>
+        <p>Email: {{email}}</p>
+        <p>Skills: {{skills}}</p>
       </div>
     </div>
     <div class="extra content">
@@ -24,6 +24,10 @@
         2 Team Members
       </span>
     </div>
+    <form class="addTeammate">
+      <input type="text" name="name" value={{_id}} readonly>
+      <button class="ui button" type="submit" name="add-member">Add</button>
+    </form>
   </div>
 </div>
 </template>
