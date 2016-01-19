@@ -1,4 +1,11 @@
 Profiles = new Mongo.Collection('profiles');
+Skills = new Mongo.Collection('skills');
+
+Skills.insert([
+  {_id: "java", name: "Java"},
+  {_id: "android", name: "android"},
+  {_id: "HTML", name: "HTML"}
+]);
 
 if (Meteor.isClient) {
 
@@ -47,6 +54,10 @@ if (Meteor.isClient) {
         return {email: Meteor.user().emails[0].address};
       }
     }
+  });
+
+  Template.createProfile.onRendered(function(){
+    this.$(".dropdown").dropdown();
   });
   
 }

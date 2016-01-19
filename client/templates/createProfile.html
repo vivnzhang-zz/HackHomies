@@ -1,35 +1,42 @@
 <template name="createProfile">
 	<h2>Profile</h2>
-	{{#with data}}
-		<form class="profile">
-			<p></p>
-			<p><form action="demo_form.asp">
-  			<input type="file" name="pic" accept="image/*" value={{profpic}}>
-  			<br>
-  			<p><input type="submit"></p>
-			</form> </p>
+	
+	
+		<!-- <p></p>
+		<p><form action="demo_form.asp">
+			<input type="file" name="pic" accept="image/*" value={{profpic}}>
 			<br>
-			<p></p>
-			<p>Name: <input type="text" name="name" value={{name}}></p>
-			<p>School: <input type="text" name="school" value={{school}}></p>
-			<p>Email:{{email}} </p>
-			<p><input type="submit" name="new-profile"></p>
-		</form>
+			<p><input type="submit"></p>
+		</form> </p>
+		<br>
+		<p></p> -->
+	{{#with data}}
+	<form class="ui form profile">
+		<div class="field">
+			<label>Name</label>
+			<input type="text" name="name" placeholder="Name" value={{name}}>
+		</div>
+		<div class="field">
+			<label>School</label>
+			<input type="text" name="school" placeholder="School" value={{school}}>
+		</div>
+		<div class="field">
+			<label>Email</label>
+			<input type="email" name="email" placeholder="Email" value={{email}}>
+		</div>
+		<div class="field">
+			<label>Skills</label>
+			<select name="skills" class="ui fluid search dropdown" multiple="">
+				<option value="">Skill</option>
+				<option value="test">Test</option>
+				{{#each skills}}
+					<option value={{_id}}>{{name}}</option>
+				{{/each}}
+			</select>
+		</div>
+		<button class="ui button" type="submit" name="new-profile">Submit</button>
+	</form>
 	{{/with}}
-
-	<!-- {{#autoForm id="profile" type="insert" collection=Collections.People}}
-		<Label>Name</Label>
-		{{> afQuickField name="name"}}
-		<Label>School</Label>
-		{{> afQuickField name="school"}}
-		<Label>Email</Label>
-		{{> afQuickField name="email"}}
-		<button type="submit">Submit</button>
-	{{/autoForm}} -->
-
-
-
-
 
 
 </template>
