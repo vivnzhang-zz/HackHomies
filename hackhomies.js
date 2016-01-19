@@ -61,7 +61,9 @@ if (Meteor.isClient) {
 
   Template.createProfile.onRendered(function(){
     this.$(".ui.fluid.dropdown").dropdown();
-    
+    if(Profiles.findOne({_id: Meteor.userId()})){
+      this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
+    }
   });
   
 }
