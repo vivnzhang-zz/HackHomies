@@ -89,6 +89,9 @@
       display: none;
     }
 
+    #stupidform {
+    }
+
     @media only screen and (max-width: 700px) {
       .ui.fixed.menu {
         display: none !important;
@@ -151,7 +154,7 @@
 
     <!-- Page Contents -->
     <div class="pusher">
-    <div class="ui grid">
+      <div class="ui grid">
         <div class = "sixteen wide column">
           <div class="ui inverted vertical masthead center aligned segment">
 
@@ -175,12 +178,15 @@
         </div>
         <div class = "five wide column"></div>
         <div class = "six wide column">
-          <div class="ui inverted vertical masthead center aligned segment">
+          <div class="ui middle aligned stackable grid container">
             <br>
             <br>
             <br>
             <br>
-            {{> atForm}}
+            <!--<script> document.getElementById("stupidform").style.width = "40%"; </script>-->
+            <div id="stupidform">
+              {{> atForm}}
+            </div>
           </div>
         </div>
         <div class = "five wide column"></div>
