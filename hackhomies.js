@@ -29,7 +29,7 @@ if (Meteor.isClient) {
         school: event.target.school.value,
         email: event.target.email.value,
         skills: $('.ui.fluid.dropdown').dropdown('get value'),
-        team: []
+        //team: []
       }
 
       if(Profiles.findOne({_id: Meteor.userId()}))
