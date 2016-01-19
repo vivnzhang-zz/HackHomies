@@ -1,46 +1,50 @@
 <template name="createProfile">
+	<br>
 	<h2>Profile</h2>
 	
-	
-		<!-- <p></p>
-		<p><form action="demo_form.asp">
-			<input type="file" name="pic" accept="image/*" value={{profpic}}>
+
+		{{#with data}}
+		<form class="ui form profile">
+			<form action="profpic.asp">
+				<input type="file" name="pic" accept="image/*">
+				<p></p>
+				<p><input type="submit"></p>
+			</form>
 			<br>
-			<p><input type="submit"></p>
-		</form> </p>
-		<br>
-		<p></p> -->
-	{{#with data}}
-	<form class="ui form profile">
-		<div class="field">
-			<label>Name</label>
-			<input type="text" name="name" placeholder="Name" value={{name}}>
-		</div>
-		<div class="field">
-			<label>School</label>
-			<input type="text" name="school" placeholder="School" value={{school}}>
-		</div>
-		<div class="field">
-			<label>Email</label>
-			<input type="email" name="email" placeholder="Email" value={{email}}>
-		</div>
-		<div class="field">
-			<label>Skills</label>
-			<select name="skills" class="ui fluid search dropdown" multiple="">
-				<option value="">Skill</option>
-				<option value="test">Test</option>
-				<option value="test2">Test2</option>
-				<option value="blah">Blah</option>
+			<br>
+			<div class="field">
+				<label>Name</label>
+				<input type="text" name="name" placeholder="Name" value={{name}}>
+			</div>
+			<br>
+			<div class="field">
+				<label>School</label>
+				<input type="text" name="school" placeholder="School" value={{school}}>
+			</div>
+			<br>
+			<div class="field">
+				<label>Email</label>
+				<input type="email" name="email" placeholder="Email" value={{email}}>
+			</div>
+			<br>
+			<div class="field">
+				<label>Skills</label>
+				<select name="skills" class="ui fluid search dropdown" multiple="">
+					<option value="">Skill</option>
+					<option value="test">Test</option>
+					<option value="test2">Test2</option>
+					<option value="blah">Blah</option>
 				<!-- {{#each Skills}}
 					{{> userInfo}}
-				{{/each}} -->
-			</select>
-		</div>
-		<button class="ui button" type="submit" name="new-profile">Submit</button>
-	</form>
-	{{/with}}
-</template>
+					{{/each}} -->
+				</select>
+			</div>
+			<br>
+			<button class="ui button" type="submit" name="new-profile">Submit</button>
+		</form>
+		{{/with}}
+	</template>
 
-<template name="userInfo">
-	<option value={{_id}}>{{name}}</option>
-</template>
+	<template name="userInfo">
+		<option value={{_id}}>{{name}}</option>
+	</template>

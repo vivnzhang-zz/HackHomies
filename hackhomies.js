@@ -24,6 +24,7 @@ if (Meteor.isClient) {
       // alert(event.target.skills.value.dropdown('get selected'));
       var myProfile = {
         _id: Meteor.userId(),
+        pic: event.target.pic.value,
         name: event.target.name.value,
         school: event.target.school.value,
         email: event.target.email.value,
@@ -55,7 +56,9 @@ if (Meteor.isClient) {
 
   Template.createProfile.onRendered(function(){
     this.$(".ui.fluid.dropdown").dropdown();
-    
+    if(Profiles.findOne({_id: Meteor.userId()})){
+      this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
+    }
   });
 
   // Template.teams.helpers({
