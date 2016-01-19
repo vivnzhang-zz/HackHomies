@@ -1,13 +1,22 @@
 <template name="layout">
+  <div class="ui grid">
+  <div class = "sixteen wide column">
   <header>
     <h1>Hack Homies!!</h1>
   </header>
+</div>
+<div class= "four wide column">
   {{> nav }}
+</div>
+<div class = "twelve wide column">
   <div class="container">
       {{> yield}}
   </div>
-
+</div>
+<div class = "sixteen wide column">
   <footer>
     Copyright by John Bush 2016
   </footer>
+</div>
+</div>
 </template>
