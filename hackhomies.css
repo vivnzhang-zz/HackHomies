@@ -17,8 +17,9 @@ body {
 
 .container {
   text-align: center;
-  float: right;
-  width: 75%;
+  float: center;
+  padding-right: 20px;
+  width: 100%
   margin: 0 auto;
   min-height: 100%;
 }
@@ -65,6 +66,10 @@ form {
 
 .profile {
   font-family: "Lato";
+}
+
+#footer {
+  float: center;
 }
 .new-profile input {
   box-sizing: border-box;
@@ -133,6 +138,7 @@ header .hide-completed {
 .toggle-private {
   margin-left: 5px;
 }
+
 
 @media (max-width: 600px) {
   li {
