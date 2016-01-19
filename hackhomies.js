@@ -28,12 +28,15 @@ if (Meteor.isClient) {
   Template.createProfile.events({
     'submit .profile': function (event) {
       //console.log("submitted");
+      // alert(event.target.skills.value.dropdown('get selected'));
       var myProfile = {
         _id: Meteor.userId(),
         name: event.target.name.value,
         school: event.target.school.value,
-        email: event.target.email.value
-      };
+        email: event.target.email.value,
+        skills: $('.ui.fluid.dropdown').dropdown('get value')
+      }
+
       if(Profiles.findOne({_id: Meteor.userId()}))
         Profiles.update(
           {_id: Meteor.userId()},
@@ -57,7 +60,8 @@ if (Meteor.isClient) {
   });
 
   Template.createProfile.onRendered(function(){
-    this.$(".dropdown").dropdown();
+    this.$(".ui.fluid.dropdown").dropdown();
+    
   });
   
 }

@@ -25,3 +25,4 @@ useraccounts:semantic-ui
 service-configuration
 semantic:ui
 flemay:less-autoprefixer
+semantic:ui-dropdown

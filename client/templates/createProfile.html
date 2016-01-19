@@ -29,14 +29,18 @@
 			<select name="skills" class="ui fluid search dropdown" multiple="">
 				<option value="">Skill</option>
 				<option value="test">Test</option>
-				{{#each skills}}
-					<option value={{_id}}>{{name}}</option>
-				{{/each}}
+				<option value="test2">Test2</option>
+				<option value="blah">Blah</option>
+				<!-- {{#each Skills}}
+					{{> userInfo}}
+				{{/each}} -->
 			</select>
 		</div>
 		<button class="ui button" type="submit" name="new-profile">Submit</button>
 	</form>
 	{{/with}}
+</template>
 
-
+<template name="userInfo">
+	<option value={{_id}}>{{name}}</option>
 </template>
