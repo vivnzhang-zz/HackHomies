@@ -20,19 +20,35 @@ if (Meteor.isClient) {
 
   Template.createProfile.events({
     'submit .profile': function (event) {
-      Profiles.insert({
-        username: Meteor.user().username,
+      //console.log("submitted");
+      var myProfile = {
+        _id: Meteor.userId(),
         name: event.target.name.value,
         school: event.target.school.value,
         email: event.target.email.value
-      })
+      };
+      if(Profiles.findOne({_id: Meteor.userId()}))
+        Profiles.update(
+          {_id: Meteor.userId()},
+          {$set: myProfile}
+        );
+      else
+        Profiles.insert(myProfile);
     }, 
-  });
 
-  Template.createProfile.helpers({
     
   });
 
+  Template.createProfile.helpers({
+    data:function(){
+      if(Profiles.findOne({_id: Meteor.userId()})){
+        return Profiles.findOne({_id: Meteor.userId()});
+      } else {
+        return {};
+      }
+    }
+  });
+  
 }
 
 if (Meteor.isServer) {

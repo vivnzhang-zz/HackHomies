@@ -1,9 +1,28 @@
 <template name="createProfile">
-	<h1>Profile</h1>
+	<h2>Profile</h2>
+	{{#with data}}
 		<form class="profile">
-			<p>Name: <input type="text" name="name"></p>
-			<p>School: <input type="text" name="school"></p>
-			<p>Email: <input type="email" name="email"></p>
+			<p></p>
+			<p>Name: <input type="text" name="name" value={{name}}></p>
+			<p>School: <input type="text" name="school" value={{school}}></p>
+			<p>Email: <input type="email" name="email" value={{email}}></p>
 			<p><input type="submit" name="new-profile"></p>
 		</form>
+	{{/with}}
+
+	<!-- {{#autoForm id="profile" type="insert" collection=Collections.People}}
+		<Label>Name</Label>
+		{{> afQuickField name="name"}}
+		<Label>School</Label>
+		{{> afQuickField name="school"}}
+		<Label>Email</Label>
+		{{> afQuickField name="email"}}
+		<button type="submit">Submit</button>
+	{{/autoForm}} -->
+
+
+
+    
+
+
 </template>
