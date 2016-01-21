@@ -24,7 +24,7 @@ if (Meteor.isClient) {
       // alert(event.target.skills.value.dropdown('get selected'));
       var myProfile = {
         _id: Meteor.userId(),
-        pic: event.target.pic.value,
+        //pic: event.target.pic.value,
         name: event.target.name.value,
         school: event.target.school.value,
         email: event.target.email.value,
