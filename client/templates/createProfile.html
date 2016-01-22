@@ -1,7 +1,9 @@
 <template name="createProfile">
-	<br>
-	<h2>Profile</h2>
-	
+	<div class= "four wide column"></div>
+	<div class = "four wide column">
+		<br>
+		<h2>Profile</h2>
+		
 
 		{{#with data}}
 		<form class="ui form profile">
@@ -43,8 +45,10 @@
 			<button class="ui button" type="submit" name="new-profile">Submit</button>
 		</form>
 		{{/with}}
-	</template>
+	</div>
+	<div class= "four wide column"></div>
+</template>
 
-	<template name="userInfo">
-		<option value={{_id}}>{{name}}</option>
-	</template>
+<template name="userInfo">
+	<option value={{_id}}>{{name}}</option>
+</template>

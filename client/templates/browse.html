@@ -1,11 +1,13 @@
 <template name="browse">
 	<div id="browse">
-	<h2>Browse teammates</h2> 
-	<div style="float:center">
-		{{#each profiles}}
-			{{> fullProfile}}
-		{{/each}}
+		
+		<div style="float:center">
+			<h2>Browse teammates</h2> 
+				<div class="ui three doubling stackable cards">
+					{{#each profiles}}
+					{{> fullProfile}}
+					{{/each}}
+				</div>
+		</div>
 	</div>
-</div>
-
 </template>
