@@ -85,12 +85,31 @@ if (Meteor.isClient) {
       
       //must have already created profile
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      myTeammates.push(event.target.name.value);
+      var alreadyAdded = false;
+      var target = event.target.name.value;
+      alert(target);
+      for(var i = 0; i < myTeammates.length; i++){
+        var person = myTeammates[i];
+        if(person == target) {
+          alreadyAdded = true;
+        }
+      }      
+      if(!alreadyAdded) {
+        myTeammates.push(target);
+      } 
+      alert(myTeammates);
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
       );
+<<<<<<< HEAD
+        
 
+=======
+          {_id: Meteor.userId()},
+          {$set: {team: myTeammates}}
+        );
+>>>>>>> f7a17ac6a3f03666f434e7700c3becab59e19de8
     }
     
   });

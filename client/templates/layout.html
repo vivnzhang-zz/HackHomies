@@ -1,22 +1,22 @@
 <template name="layout">
-  <div class="ui grid">
-  <div class = "sixteen wide column">
-<div class="ui menu">
-  <div class="header item">
-    HackHomies
-  </div>
-</div>
-</div>
-<div class= "four wide column">
-  {{> nav }}
-</div>
-<div class= "four wide column"></div>
-<div class = "four wide column">
-      {{> yield}}
-</div>
-<div class= "four wide column"></div>
-<div class = "sixteen wide column">
-  {{>footer}}
-</div>
-</div>
+	<div class="ui grid">
+		<div class = "sixteen wide column">
+			<div class="ui menu">
+				<div class="header item">
+					HackHomies
+				</div>
+			</div>
+		</div>
+		<div class= "four wide column">
+			{{> nav }}
+		</div>
+		<div class = "eleven wide column">
+
+			{{> yield}}
+
+		</div>
+		<div class = "sixteen wide column">
+			{{>footer}}
+		</div>
+	</div>
 </template>
