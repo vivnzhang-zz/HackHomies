@@ -1,6 +1,11 @@
 <template name="teams">
-  <p>See my team mates</p>
-  {{#each profiles}}
-			{{> fullProfile}}
-		{{/each}}
+	
+		<div style="float:center">
+			<h2>See my teammates</h2> 
+				<div class="ui three doubling stackable cards">
+					{{#each profiles}}
+					{{> fullProfile}}
+					{{/each}}
+				</div>
+		</div>
 </template>
