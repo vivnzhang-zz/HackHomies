@@ -1,4 +1,5 @@
 Profiles = new Mongo.Collection('profiles');
+//Teammates = new Mongo.Collection('teammates');
 
 if (Meteor.isClient) {
 
@@ -29,7 +30,7 @@ if (Meteor.isClient) {
         school: event.target.school.value,
         email: event.target.email.value,
         skills: $('.ui.fluid.dropdown').dropdown('get value'),
-        //team: []
+        team: []
       }
 
       if(Profiles.findOne({_id: Meteor.userId()}))
@@ -61,13 +62,20 @@ if (Meteor.isClient) {
     }
   });
 
-  // Template.teams.helpers({
-  //   //var myTeam = Profiles.findOne({_id: Meteor.userId()}).teams;
-  //   alert( Profiles.findOne({_id: Meteor.userId()}).teams );
-  //   profiles: function () {
-  //     return Profiles.find({_id: Profiles.findOne({_id: Meteor.userId()}).teams[0]});
-  //   }
-  // });
+  Template.teams.helpers({
+    //var myTeam = Profiles.findOne({_id: Meteor.userId()}).teams;
+    //alert( Profiles.findOne({_id: Meteor.userId()}).teams );
+    profiles: function () {
+      var myTeam = Profiles.findOne({_id: Meteor.userId()}).team;
+      var Teammates = [];
+      for(var i = 0; i < myTeam.length; i++){
+        var person = Profiles.findOne({_id: myTeam[i]});
+        //alert(person._id);
+        Teammates.push(person);
+      }
+      return Teammates;
+    }
+  });
 
   Template.fullProfile.events({
     'submit .addTeammate': function (event) {
@@ -77,7 +85,7 @@ if (Meteor.isClient) {
       
       //must have already created profile
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      myTeammates.push(event.target.name.value)
+      myTeammates.push(event.target.name.value);
       Profiles.update(
           {_id: Meteor.userId()},
           {$set: {team: myTeammates}}
