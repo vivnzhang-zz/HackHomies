@@ -84,12 +84,9 @@ if (Meteor.isClient) {
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       var alreadyAdded = false;
       var target = event.target.name.value;
-      for(var i = 0; i < myTeammates.length; i++){
-        var person = myTeammates[i];
-        if(person == target) {
-          alreadyAdded = true;
-        }
-      }      
+      if(myTeammates.indexOf(event.target.name.value) == -1){
+        alreadyAdded = true;
+      }  
       if(!alreadyAdded) {
         myTeammates.push(target);
       } 
