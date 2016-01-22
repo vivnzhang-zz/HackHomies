@@ -77,7 +77,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.fullProfile.events({
+  Template.browse.events({
     'submit .addTeammate': function (event) {
       //alert("button submitted");
       //alert(event.target.skills.value.dropdown('get selected'));
@@ -87,12 +87,26 @@ if (Meteor.isClient) {
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       myTeammates.push(event.target.name.value);
       Profiles.update(
-          {_id: Meteor.userId()},
-          {$set: {team: myTeammates}}
-        );
+        {_id: Meteor.userId()},
+        {$set: {team: myTeammates}}
+      );
 
     }
     
+  });
+
+  Template.removeTeam.events({
+    'submit .removeTeammate': function (event) {
+      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      var index = myTeammates.indexOf(event.target.name.value);
+      if(index > -1){
+        myTeammates.splice(index, 1);
+      }
+      Profiles.update(
+        {_id: Meteor.userId()},
+        {$set: {team: myTeammates}}
+      );
+    }
   });
   
 }
