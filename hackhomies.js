@@ -79,15 +79,11 @@ if (Meteor.isClient) {
 
   Template.browse.events({
     'submit .addTeammate': function (event) {
-      //alert("button submitted");
-      //alert(event.target.skills.value.dropdown('get selected'));
-      //alert(event.target.name.value);
       
       //must have already created profile
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       var alreadyAdded = false;
       var target = event.target.name.value;
-      alert(target);
       for(var i = 0; i < myTeammates.length; i++){
         var person = myTeammates[i];
         if(person == target) {
@@ -102,16 +98,7 @@ if (Meteor.isClient) {
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
       );
-<<<<<<< HEAD
-        
-
-=======
-          {_id: Meteor.userId()},
-          {$set: {team: myTeammates}}
-        );
->>>>>>> f7a17ac6a3f03666f434e7700c3becab59e19de8
     }
-    
   });
 
   Template.removeTeam.events({
