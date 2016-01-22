@@ -1,41 +1,42 @@
 <template name="createProfile">
-	<div class= "four wide column"></div>
-	<div class = "four wide column">
-		<br>
-		<h2>Profile</h2>
-		
+	<div class="ui grid">
 
-		{{#with data}}
-		<form class="ui form profile">
-			<form action="profpic.asp">
-				<input type="file" name="pic" accept="image/*">
-				<p></p>
-				<p><input type="submit"></p>
-			</form>
+		<div class="four wide column"></div>
+		<div class="eight wide column">
 			<br>
-			<br>
-			<div class="field">
-				<label>Name</label>
-				<input type="text" name="name" placeholder="Name" value={{name}}>
-			</div>
-			<br>
-			<div class="field">
-				<label>School</label>
-				<input type="text" name="school" placeholder="School" value={{school}}>
-			</div>
-			<br>
-			<div class="field">
-				<label>Email</label>
-				<input type="email" name="email" placeholder="Email" value={{email}}>
-			</div>
-			<br>
-			<div class="field">
-				<label>Skills</label>
-				<select name="skills" class="ui fluid search dropdown" multiple="">
-					<option value="">Skill</option>
-					<option value="test">Test</option>
-					<option value="test2">Test2</option>
-					<option value="blah">Blah</option>
+			<h2>Profile</h2>
+
+			{{#with data}}
+			<form class="ui form profile">
+				<form action="profpic.asp">
+					<input type="file" name="pic" accept="image/*">
+					<p></p>
+					<p><input type="submit"></p>
+				</form>
+				<br>
+				<br>
+				<div class="field">
+					<label>Name</label>
+					<input type="text" name="name" placeholder="Name" value={{name}}>
+				</div>
+				<br>
+				<div class="field">
+					<label>School</label>
+					<input type="text" name="school" placeholder="School" value={{school}}>
+				</div>
+				<br>
+				<div class="field">
+					<label>Email</label>
+					<input type="email" name="email" placeholder="Email" value={{email}}>
+				</div>
+				<br>
+				<div class="field">
+					<label>Skills</label>
+					<select name="skills" class="ui fluid search dropdown" multiple="">
+						<option value="">Skill</option>
+						<option value="test">Test</option>
+						<option value="test2">Test2</option>
+						<option value="blah">Blah</option>
 				<!-- {{#each Skills}}
 					{{> userInfo}}
 					{{/each}} -->
@@ -46,7 +47,8 @@
 		</form>
 		{{/with}}
 	</div>
-	<div class= "four wide column"></div>
+	<div class="two wide column"></div>
+</div>
 </template>
 
 <template name="userInfo">
