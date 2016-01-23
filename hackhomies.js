@@ -19,6 +19,21 @@ if (Meteor.isClient) {
   //   }
   // });
 
+  Template.fullProfile.helpers({
+   // button: function () {
+   //  return "requestTeam";
+   // }
+   added: function () {
+    //alert(this._id);
+    var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+    if(myTeammates.indexOf(this._id) == -1){
+      return false;
+    }
+    return true;
+
+   }
+  });
+
   Template.createProfile.events({
     'submit': function (event) {
       //console.log("submitted");
@@ -82,15 +97,12 @@ if (Meteor.isClient) {
       
       //must have already created profile
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      var alreadyAdded = false;
+      
       var target = event.target.name.value;
       if(myTeammates.indexOf(event.target.name.value) == -1){
-        alreadyAdded = true;
-      }  
-      if(!alreadyAdded) {
         myTeammates.push(target);
-      } 
-      alert(myTeammates);
+      }  
+      //alert(myTeammates);
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}

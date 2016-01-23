@@ -23,6 +23,17 @@
         2 Team Members
       </span>
     </div>
-    {{> requestTeam}}
+
+    <!-- {{#with profileID=this._id}} -->
+      <!-- <p>{{blah}}</p> -->
+      {{#if added}}
+        {{> removeTeam}}
+      {{else}}
+        {{> requestTeam}}
+      {{/if}}
+<!--     {{/with}}
+ -->
+    <!-- {{> DynamicTemplate template=button}} -->
+
   </div>
 </template>

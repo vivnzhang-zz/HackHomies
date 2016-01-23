@@ -27,3 +27,4 @@ semantic:ui
 flemay:less-autoprefixer
 semantic:ui-dropdown
 gfk:notifications
+iron:dynamic-template
