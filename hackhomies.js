@@ -1,5 +1,4 @@
 Profiles = new Mongo.Collection('profiles');
-//Teammates = new Mongo.Collection('teammates');
 
 if (Meteor.isClient) {
 
@@ -27,21 +26,10 @@ if (Meteor.isClient) {
     }
     return 'removeTeam';
    }
-   // added: function () {
-   //  //alert(this._id);
-   //  var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-   //  if(myTeammates.indexOf(this._id) == -1){
-   //    return false;
-   //  }
-   //  return true;
-
-   // }
   });
 
   Template.createProfile.events({
     'submit': function (event) {
-      //console.log("submitted");
-      // alert(event.target.skills.value.dropdown('get selected'));
       var myProfile = {
         _id: Meteor.userId(),
         //pic: event.target.pic.value,
@@ -82,14 +70,11 @@ if (Meteor.isClient) {
   });
 
   Template.teams.helpers({
-    //var myTeam = Profiles.findOne({_id: Meteor.userId()}).teams;
-    //alert( Profiles.findOne({_id: Meteor.userId()}).teams );
     profiles: function () {
       var myTeam = Profiles.findOne({_id: Meteor.userId()}).team;
       var Teammates = [];
       for(var i = 0; i < myTeam.length; i++){
         var person = Profiles.findOne({_id: myTeam[i]});
-        //alert(person._id);
         Teammates.push(person);
       }
       return Teammates;
