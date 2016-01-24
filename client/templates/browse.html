@@ -1,20 +1,20 @@
 <template name="browse">
 	<div id="browse">
-		<div class="ui search">
-		  <div class="ui icon input">
-		    <input class="prompt" type="text" placeholder="Search teammates...">
-		    <i class="search icon"></i>
-		  </div>
-		  <div class="results"></div>
-		</div>
+		<!-- <div class="ui search">
+			<div class="ui icon input">
+				<input class="prompt" type="text" placeholder="Search teammates...">
+				<i class="search icon"></i>
+			</div>
+			<div class="results"></div>
+		</div> -->
 		<div style="float:center">
 			<br>
 			<h2>Browse teammates</h2> 
-				<div class="ui three doubling stackable cards">
-					{{#each profiles}}
-						{{> fullProfile}}
-					{{/each}}
-				</div>
+			<div class="ui three doubling stackable cards">
+				{{#each profiles}}
+				{{> fullProfile}}
+				{{/each}}
+			</div>
 		</div>
 	</div>
 </template>

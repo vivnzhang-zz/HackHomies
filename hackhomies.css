@@ -1,5 +1,5 @@
 body {
-  background-image: url("http://i649.photobucket.com/albums/uu213/jessie_wang1/ducks_zpsm7thelfu.png");
+  background-image: url("http://i649.photobucket.com/albums/uu213/jessie_wang1/grayduckstransparent_zpsdzikd9tr.png");
   background-attachment: fixed;
 }
 .hackhomies {
@@ -18,10 +18,22 @@ body {
   color: white;
 }
 
-#floatbox {
-  width: 60%;
+/*#floatbox {
+  width: 100%;
+  height: 80%;
+  padding-left: 300px;
+  padding-top: 40px;
+  background-color: white;
  
+}*/
+
+.ui.vertical.menu {
+  width: 11rem;
 }
+
+/*.shadowbox{
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}*/
 /*
 
 .container {
