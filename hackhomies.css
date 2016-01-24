@@ -1,3 +1,7 @@
+body {
+  background-image: url("http://i649.photobucket.com/albums/uu213/jessie_wang1/ducks_zpsm7thelfu.png");
+  background-attachment: fixed;
+}
 .hackhomies {
   font-family: "Moon Flower";
   font-size: 130px;
@@ -5,13 +9,18 @@
 }
 
 .frontpagespacing{
-  padding-top: 240px;
+  padding-top: 225px;
   float: center;
   vertical-align: center;
 }
 
 .whitefont{
   color: white;
+}
+
+#floatbox {
+  width: 60%;
+ 
 }
 /*
 

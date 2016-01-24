@@ -1,7 +1,7 @@
 <template name="layout">
 	<div class="ui grid">
 		<div class = "sixteen wide column">
-			<div class="ui menu">
+			<div class="ui top fixed menu">
 				<div class="right menu">
 				<div class="header item">
 					HackHomies
@@ -9,6 +9,13 @@
 				<a class="ui item" href="/sign-out">
 					Log Out
 				</a>
+				<div class="ui search">
+			<div class="ui icon input">
+				<input class="prompt" type="text" placeholder="Search teammates...">
+				<i class="search icon"></i>
+			</div>
+			<div class="results"></div>
+		</div>
 			</div>	
 			</div>
 		</div>
