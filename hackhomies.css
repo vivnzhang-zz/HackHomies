@@ -1,3 +1,18 @@
+.hackhomies {
+  font-family: "Hanging Letters";
+  font-size: 120px;
+  /*opacity: .95;*/ 
+}
+
+.frontpagespacing{
+  padding-top: 270px;
+  float: center;
+  vertical-align: center;
+}
+
+.whitefont{
+  color: white;
+}
 /*
 
 .container {
