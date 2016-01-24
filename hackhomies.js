@@ -1,5 +1,4 @@
 Profiles = new Mongo.Collection('profiles');
-//Teammates = new Mongo.Collection('teammates');
 
 if (Meteor.isClient) {
 
@@ -19,10 +18,18 @@ if (Meteor.isClient) {
   //   }
   // });
 
+  Template.fullProfile.helpers({
+   button: function () {
+    var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+    if(myTeammates.indexOf(this._id) == -1){
+      return 'requestTeam';
+    }
+    return 'removeTeam';
+   }
+  });
+
   Template.createProfile.events({
     'submit': function (event) {
-      //console.log("submitted");
-      // alert(event.target.skills.value.dropdown('get selected'));
       var myProfile = {
         _id: Meteor.userId(),
         //pic: event.target.pic.value,
@@ -63,14 +70,11 @@ if (Meteor.isClient) {
   });
 
   Template.teams.helpers({
-    //var myTeam = Profiles.findOne({_id: Meteor.userId()}).teams;
-    //alert( Profiles.findOne({_id: Meteor.userId()}).teams );
     profiles: function () {
       var myTeam = Profiles.findOne({_id: Meteor.userId()}).team;
       var Teammates = [];
       for(var i = 0; i < myTeam.length; i++){
         var person = Profiles.findOne({_id: myTeam[i]});
-        //alert(person._id);
         Teammates.push(person);
       }
       return Teammates;
@@ -82,14 +86,13 @@ if (Meteor.isClient) {
       
       //must have already created profile
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      var alreadyAdded = false;
       var target = event.target.name.value;
       if(myTeammates.indexOf(event.target.name.value) > -1){
         alreadyAdded = true;
       }  
       if(!alreadyAdded) {
         myTeammates.push(target);
-      } 
+      }  
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
