@@ -7,6 +7,15 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 
+  Template.nav.helpers({
+    teamCount: function () {
+      return Profiles.findOne({_id: Meteor.userId()}).team.length;
+    },
+    requestCount: function () {
+      return Profiles.findOne({_id: Meteor.userId()}).receivedRequests.length;
+    }
+  });
+
   Template.browse.helpers({
     profiles: function () {
       return Profiles.find({});
