@@ -26,5 +26,6 @@ service-configuration
 semantic:ui
 flemay:less-autoprefixer
 semantic:ui-dropdown
-gfk:notifications
 iron:dynamic-template
+juliancwirko:s-alert
+juliancwirko:s-alert-scale

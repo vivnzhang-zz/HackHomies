@@ -1,4 +1,5 @@
 Profiles = new Mongo.Collection('profiles');
+Notifications = new Meteor.Collection('notifications');
 
 if (Meteor.isClient) {
 
@@ -12,19 +13,59 @@ if (Meteor.isClient) {
     }
   });
 
-  // Template.profile.helpers({
-  //   username: function () {
-  //     return Meteor.user() && Meteor.user().username;
-  //   }
-  // });
+  Template.teams.helpers({
+    profiles: function () {
+      var myTeam = Profiles.findOne({_id: Meteor.userId()}).team;
+      var Teammates = [];
+      for(var i = 0; i < myTeam.length; i++){
+        var person = Profiles.findOne({_id: myTeam[i]});
+        Teammates.push(person);
+      }
+      return Teammates;
+    }
+  });
+
+  Template.requests.helpers({
+    sent: function () {
+      var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
+      //alert(mySentRequests);
+      var Teammates = [];
+      for(var i = 0; i < mySentRequests.length; i++){
+        var person = Profiles.findOne({_id: mySentRequests[i]});
+        Teammates.push(person);
+      }
+      return Teammates;
+
+      // return Profiles.find({
+      //   _id: {$in: mySentRequests}
+      // });
+    },
+    received: function () {
+      var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
+      var Teammates = [];
+      for(var i = 0; i < myReceivedRequests.length; i++){
+        var person = Profiles.findOne({_id: myReceivedRequests[i]});
+        Teammates.push(person);
+      }
+      return Teammates;
+
+    },
+    
+  });
 
   Template.fullProfile.helpers({
    button: function () {
-    var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-    if(myTeammates.indexOf(this._id) == -1){
+    var myProfile = Profiles.findOne({_id: Meteor.userId()});
+    var personID = this._id;
+    if(myProfile.team.indexOf(this._id) > -1){
+      return 'removeTeam';
+    } else if(myProfile.receivedRequests.indexOf(this._id) > -1){
+      return 'respondRequest';
+    } else if(myProfile.sentRequests.indexOf(this._id) > -1){
+      return 'deleteRequest';
+    } else {
       return 'requestTeam';
     }
-    return 'removeTeam';
    }
   });
 
@@ -37,7 +78,9 @@ if (Meteor.isClient) {
         school: event.target.school.value,
         email: event.target.email.value,
         skills: $('.ui.fluid.dropdown').dropdown('get value'),
-        team: []
+        team: [],
+        sentRequests: [],
+        receivedRequests: []
       }
 
       if(Profiles.findOne({_id: Meteor.userId()}))
@@ -47,6 +90,7 @@ if (Meteor.isClient) {
         );
       else
         Profiles.insert(myProfile);
+
     }, 
 
     
@@ -69,55 +113,167 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.teams.helpers({
-    profiles: function () {
-      var myTeam = Profiles.findOne({_id: Meteor.userId()}).team;
-      var Teammates = [];
-      for(var i = 0; i < myTeam.length; i++){
-        var person = Profiles.findOne({_id: myTeam[i]});
-        Teammates.push(person);
-      }
-      return Teammates;
-    }
-  });
-
-  Template.browse.events({
-    'submit .addTeammate': function (event) {
-      
+  Template.fullProfile.events({
+    'submit .requestTeam': function (event) {
       //must have already created profile
-      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      
-      var target = event.target.name.value;
-      if(myTeammates.indexOf(event.target.name.value) == -1){
-        myTeammates.push(target);
-      }  
-      //alert(myTeammates);
+      var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
+      //var target = event.target.name.value;
+      var target = event.currentTarget.getAttribute('data-id');
+      var targetReceivedRequests = Profiles.findOne({_id: target}).receivedRequests;
+      mySentRequests.push(target);
+      targetReceivedRequests.push(Meteor.userId());
       Profiles.update(
         {_id: Meteor.userId()},
-        {$set: {team: myTeammates}}
+        {$set: {sentRequests: mySentRequests}}
       );
-    }
-  });
+      Profiles.update(
+        {_id: target},
+        {$set: {receivedRequests: targetReceivedRequests}}
+      );
+      return false;
+    },
 
-  Template.removeTeam.events({
-    'submit .removeTeammate': function (event) {
-      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      var index = myTeammates.indexOf(event.target.name.value);
-      if(index > -1){
-        myTeammates.splice(index, 1);
+    'submit .deleteRequest': function (event) {
+      var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
+      var target = event.currentTarget.getAttribute('data-id');
+      var index = mySentRequests.indexOf(target);
+      var targetReceivedRequests = Profiles.findOne({_id: target}).receivedRequests;
+      var targetIndex = targetReceivedRequests.indexOf(Meteor.userId());
+      if(index > -1 && targetIndex > -1){
+        mySentRequests.splice(target, 1);
+        targetReceivedRequests.splice(targetIndex, 1);
       }
       Profiles.update(
         {_id: Meteor.userId()},
+        {$set: {sentRequests: mySentRequests}}
+      );
+      Profiles.update(
+        {_id: target},
+        {$set: {receivedRequests: targetReceivedRequests}}
+      );
+      return false;
+    },
+
+    'submit .removeTeam': function (event) {
+      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      var target = event.currentTarget.getAttribute('data-id');
+      var index = myTeammates.indexOf(target);
+      var targetTeammates = Profiles.findOne({_id: target}).team;
+      var targetIndex = targetTeammates.indexOf(Meteor.userId());
+
+      if(index > -1 && targetIndex > -1){
+        myTeammates.splice(index, 1);
+        targetTeammates.splice(targetIndex, 1);
+      }
+
+      Profiles.update(
+        {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
       );
+      Profiles.update(
+        {_id: target},
+        {$set: {team: targetTeammates}}
+      );
+      return false;
+    },
+
+    'click #accept': function(event, template){
+      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      var target = template.find(".respondRequest").getAttribute('data-id');
+      var targetTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      myTeammates.push(target);
+      targetTeammates.push(Meteor.userId());
+      Profiles.update(
+        {_id: Meteor.userId()},
+        {$set: {team: myTeammates}}
+      );
+      Profiles.update(
+        {_id: target},
+        {$set: {team: targetTeammates}}
+      );
+
+      var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
+      var target = template.find(".respondRequest").getAttribute('data-id');
+      var index = myReceivedRequests.indexOf(target);
+      var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
+      var targetIndex = targetSentRequests.indexOf(Meteor.userId());
+      if(index > -1 && targetIndex > -1){
+        myReceivedRequests.splice(index, 1);
+        targetSentRequests.splice(targetIndex, 1);
+      }
+      Profiles.update(
+        {_id: Meteor.userId()},
+        {$set: {receivedRequests: myReceivedRequests}}
+      );
+      Profiles.update(
+        {_id: target},
+        {$set: {sentRequests: mySentRequests}}
+      );
+      return false;
+    },
+
+    'click #decline': function(event, template){
+      var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
+      var target = template.find(".respondRequest").getAttribute('data-id');
+      var index = myReceivedRequests.indexOf(target);
+      var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
+      var targetIndex = targetSentRequests.indexOf(Meteor.userId());
+      if(index > -1 && targetIndex > -1){
+        myReceivedRequests.splice(index, 1);
+        targetSentRequests.splice(targetIndex, 1);
+      }
+      Profiles.update(
+        {_id: Meteor.userId()},
+        {$set: {receivedRequests: myReceivedRequests}}
+      );
+      Profiles.update(
+        {_id: target},
+        {$set: {sentRequests: mySentRequests}}
+      );
+      return false;
     }
+    
+    
   });
+
+  // Template.respondRequest.events({
+  //   'click button[type=submit]': function (event, template) {
+  //     var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+  //     var target = template.find(".respondRequest").getAttribute('data-id');
+  //     var targetTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+  //     alert(event.target.prop("id"));
+  //     if ($(event.target).prop("id") == "accept") {
+  //       myTeammates.push(target);
+  //       targetTeammates.push(Meteor.userId());
+  //     } 
+  //     var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
+  //     var index = myReceivedRequests.indexOf(target);
+  //     var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
+  //     var targetIndex = targetSentRequests.indexOf(Meteor.userId());
+  //     if(index > -1 && targetIndex > -1){
+  //       myReceivedRequests.splice(index, 1);
+  //       targetSentRequests.splice(targetIndex, 1);
+  //     }
+  //     Profiles.update(
+  //       {_id: Meteor.userId()},
+  //       {$set: {team: myTeammates, receivedRequests: myReceivedRequests}}
+  //     );
+  //     Profiles.update(
+  //       {_id: target},
+  //       {$set: {team: targetTeammates, sentRequests: mySentRequests}}
+  //     );
+  //     return false;
+  //   }
+    
+  // });
+
+
   
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+  Meteor.startup(function(){
+
   });
 }
 
