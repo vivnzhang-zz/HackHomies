@@ -53,6 +53,10 @@ if (Meteor.isClient) {
     
   });
 
+Template.index.rendered=
+$(document).scrollTop( $("#bot").offset().top );
+
+
   Template.fullProfile.helpers({
    button: function () {
     var myProfile = Profiles.findOne({_id: Meteor.userId()});
@@ -165,7 +169,6 @@ if (Meteor.isClient) {
         myTeammates.splice(index, 1);
         targetTeammates.splice(targetIndex, 1);
       }
-
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
@@ -235,37 +238,6 @@ if (Meteor.isClient) {
     
     
   });
-
-  // Template.respondRequest.events({
-  //   'click button[type=submit]': function (event, template) {
-  //     var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-  //     var target = template.find(".respondRequest").getAttribute('data-id');
-  //     var targetTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-  //     alert(event.target.prop("id"));
-  //     if ($(event.target).prop("id") == "accept") {
-  //       myTeammates.push(target);
-  //       targetTeammates.push(Meteor.userId());
-  //     } 
-  //     var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
-  //     var index = myReceivedRequests.indexOf(target);
-  //     var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
-  //     var targetIndex = targetSentRequests.indexOf(Meteor.userId());
-  //     if(index > -1 && targetIndex > -1){
-  //       myReceivedRequests.splice(index, 1);
-  //       targetSentRequests.splice(targetIndex, 1);
-  //     }
-  //     Profiles.update(
-  //       {_id: Meteor.userId()},
-  //       {$set: {team: myTeammates, receivedRequests: myReceivedRequests}}
-  //     );
-  //     Profiles.update(
-  //       {_id: target},
-  //       {$set: {team: targetTeammates, sentRequests: mySentRequests}}
-  //     );
-  //     return false;
-  //   }
-    
-  // });
 
 
   
