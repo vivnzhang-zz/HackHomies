@@ -1,43 +1,43 @@
 <template name="layout">
 	<body>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel='icon' href='/favicon.ico' type='image/x-icon' >
-	</head>
-	<div class="ui grid">
-		<div class = "sixteen wide column">
-			<div class="ui top fixed menu">
-				<div class="right menu">
-					<div class="ui search" style="vertical-align:center;">
-						<div class="ui icon input">
-							<input class="prompt" type="text" placeholder="Search teammates...">
-							<i class="search icon"></i>
+		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel='icon' href='/favicon.ico' type='image/x-icon' >
+		</head>
+		<div class="ui grid">
+			<div class = "sixteen wide column">
+				<div class="ui top fixed menu">
+					<div class="right menu">
+						<div class="ui search" style="vertical-align:center;">
+							<div class="ui icon input">
+								<input class="prompt" type="text" placeholder="Search teammates...">
+								<i class="search icon"></i>
+							</div>
+							<div class="results"></div>
 						</div>
-						<div class="results"></div>
-					</div>
-					<div class="header item">
-						HackHomies 
-						<img class="ui mini image" src="ducklogo.png" style="width:16px; height:16px;">
-					</div>
-					<a class="ui item" href="/sign-out">
-						Log Out
-					</a>
+						<div class="header item" style="font-family:'Moon Flower';font-size:25px;padding-top:0px;padding-bottom:0px">
+							HackHomies 
+							<img class="ui mini image" src="ducklogo.png" style="width:16px; height:16px;">
+						</div>
+						<a class="ui item" href="/sign-out">
+							Log Out
+						</a>
 
-				</div>	
+					</div>	
+				</div>
+			</div>
+			<div class= "four wide column">
+				{{> nav }}
+			</div>
+			<div class = "eleven wide column">
+				<br>
+
+				{{> yield}}
+
+			</div>
+			<div class = "sixteen wide column">
+				{{>footer}}
 			</div>
 		</div>
-		<div class= "four wide column">
-			{{> nav }}
-		</div>
-		<div class = "eleven wide column">
-			<br>
-
-			{{> yield}}
-
-		</div>
-		<div class = "sixteen wide column">
-			{{>footer}}
-		</div>
-	</div>
-</body>
+	</body>
 </template>
