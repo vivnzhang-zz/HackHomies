@@ -53,9 +53,8 @@ if (Meteor.isClient) {
     
   });
 
-Template.index.rendered=
-$(document).scrollTop( $("#bot").offset().top );
-
+// Template.index.rendered=
+// $(document).scrollTop( $("#bot").offset().top );
 
   Template.fullProfile.helpers({
    button: function () {
@@ -238,6 +237,7 @@ $(document).scrollTop( $("#bot").offset().top );
     
     
   });
+
 
 
   
