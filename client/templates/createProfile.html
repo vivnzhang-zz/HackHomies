@@ -31,65 +31,88 @@
 				<br>
 				<div class="field">
 					<label>My Skills</label>
-					<select name="skills" class="ui fluid search dropdown" multiple="">
+					<select id="mySkills" class="mySkills ui fluid search dropdown" multiple="">
 						<option value="">Skills that I have</option>
-						<option value="angular">Angular</option>
+						<option value="Angular">Angular</option>
 						<option value="C">C</option>
 						<option value="C++">C++</option>
 						<option value="C#">C#</option>
-						<option value="css">CSS</option>
-						<option value="design">Graphic Design</option>
-						<option value="ember">Ember</option>
-						<option value="html">HTML</option>
+						<option value="CSS">CSS</option>
+						<option value="Graphic Design">Graphic Design</option>
+						<option value="Ember">Ember</option>
+						<option value="HTML">HTML</option>
 						<option value="Java">Java</option>
-						<option value="javascript">Javascript</option>
+						<option value="Javascript">Javascript</option>
 						<option value="MATLAB">MATLAB</option>
-						<option value="meteor">Meteor</option>
-						<option value="node">NodeJS</option>
+						<option value="Meteor">Meteor</option>
+						<option value="NodeJS">NodeJS</option>
 						<option value="Objective-C">Objective-C</option>
-						<option value="python">Python</option>
-						<option value="rails">Rails</option>
-						<option value="react">React</option>
-						<option value="ruby">Ruby</option>
-						<option value="ui">UI Design</option>
-						<option value="ux">User Experience</option>
-				<!-- {{#each Skills}}
-					{{> userInfo}}
-					{{/each}} -->
-				</select>
-			</div>
-			<br>
-			<div class="field">
-				<label>Teammate Skills</label>
-				<select name="skills" class="ui fluid search dropdown" multiple="">
-					<option value="">What skills am I looking for in teammates?</option>
-				</select>
-			</div>
-			<br>
-			<div class="field">
-				<label>Experience</label>
-				<select class="ui dropdown">
-				  <option value="">How much hackathon experience do you have?</option>
-				  <option value="2">Super advanced pro</option>
-				  <option value="1">I'm ok I guess?</option>
-				  <option value="0">hacking baby</option>
-				</select>
-			</div>
-			<br>
-			<div class="field">
-				<label>Interests</label>
-				<select name="skills" class="ui fluid search dropdown" multiple="">
-					<option value="">What do you wanna hack?</option>
-				</select>
-			</div>
-			<br>
-			<button class="ui button" type="submit" name="new-profile">Submit</button>
-		</form>
-		{{/with}}
-	</div>
+						<option value="Python">Python</option>
+						<option value="Rails">Rails</option>
+						<option value="React">React</option>
+						<option value="Ruby">Ruby</option>
+						<option value="UI Design">UI Design</option>
+						<option value="User Experience">User Experience</option>
+					</select>
+				</div>
+				<br>
+				<div class="field">
+					<label>Teammate Skills</label>
+					<select name="teamSkills" id="teamSkills" class="teamSkills ui fluid search dropdown" multiple="">
+						<option value="">What skills am I looking for in teammates?</option>
+						<option value="Angular">Angular</option>
+						<option value="C">C</option>
+						<option value="C++">C++</option>
+						<option value="C#">C#</option>
+						<option value="CSS">CSS</option>
+						<option value="Graphic Design">Graphic Design</option>
+						<option value="Ember">Ember</option>
+						<option value="HTML">HTML</option>
+						<option value="Java">Java</option>
+						<option value="Javascript">Javascript</option>
+						<option value="MATLAB">MATLAB</option>
+						<option value="Meteor">Meteor</option>
+						<option value="NodeJS">NodeJS</option>
+						<option value="Objective-C">Objective-C</option>
+						<option value="Python">Python</option>
+						<option value="Rails">Rails</option>
+						<option value="React">React</option>
+						<option value="Ruby">Ruby</option>
+						<option value="UI Design">UI Design</option>
+						<option value="User Experience">User Experience</option>
+					</select>
+				</div>
+				<br>
+				<div class="field">
+					<label>Experience</label>
+					<select class="level ui dropdown" value = {{level}}>
+						<option value="2">Super advanced pro</option>
+						<option value="1">I'm ok I guess?</option>
+						<option value="0">hacking baby</option>
+					</select>
+				</div>
+				<br>
+				<div class="field">
+					<label>Interests</label>
+					<select id="interests" class="interests ui fluid search dropdown" multiple="">
+						<option value="">What do you wanna hack?</option>
+						<option value="A">A</option>
+						<option value="B">B</option>
+					</select>
+				</div>
+				<br>
+				<div class="field">
+                    <label>About</label>
+                    <input type="text" name="about" placeholder="About me" value={{about}}>
+                </div>
+                <br>
+				<button class="ui button" type="submit" name="new-profile">Submit</button>
+			</form>
+			{{/with}}
+		</div>
 
-</div>
-<!-- 	<div class= "four wide column"></div> -->
+	</div>
+	<!-- 	<div class= "four wide column"></div> -->
 
 
 

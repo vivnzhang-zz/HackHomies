@@ -107,12 +107,17 @@ if (Meteor.isClient) {
         name: event.target.name.value,
         school: event.target.school.value,
         email: event.target.email.value,
-        skills: $('.ui.fluid.dropdown').dropdown('get value'),
+        level: $('.level').dropdown('get value'),        
+        mySkills: $('.mySkills').dropdown('get value'),
+        teamSkills: $('.teamSkills.dropdown').dropdown('get value'),
+        interests: $('.interests.dropdown').dropdown('get value'),
+        about: event.target.about.value,
         team: [],
         sentRequests: [],
         receivedRequests: []
       }
 
+      // Meteor.call('updateProfile', myProfile);
       if(Profiles.findOne({_id: Meteor.userId()}))
         Profiles.update(
           {_id: Meteor.userId()},
@@ -120,7 +125,8 @@ if (Meteor.isClient) {
         );
       else
         Profiles.insert(myProfile);
-      //Router.go('browse');
+      
+      // Router.go('browse');
     }, 
 
     
@@ -138,8 +144,17 @@ if (Meteor.isClient) {
 
   Template.createProfile.onRendered(function(){
     this.$(".ui.fluid.dropdown").dropdown();
+    // if(Profiles.findOne({_id: Meteor.userId()})){
+    //   this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
+    // }
+    // this.$("#mySkills").dropdown();
+    // this.$("#teamSkills").dropdown();
+    // this.$("#interests").dropdown();
     if(Profiles.findOne({_id: Meteor.userId()})){
-      this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
+      this.$(".level").dropdown('set selected',  Profiles.findOne({_id: Meteor.userId()}).level)
+      this.$("#mySkills").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).mySkills);
+      this.$("#teamSkills").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).teamSkills);
+      this.$("#interests").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).interests);
     }
   });
 
@@ -264,15 +279,6 @@ if (Meteor.isClient) {
     
     
   });
-
-
-
-  
-}
-
-if (Meteor.isServer) {
-  Meteor.startup(function(){
-
-  });
+ 
 }
 
