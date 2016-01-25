@@ -1,18 +1,18 @@
 <template name="requests">
 	<div id="requests">
 		
-		<div style="float:center">
-			<h2>Received Requests</h2> 
-				<div class="ui three doubling stackable cards">
+		<div>
+			<h2>Team Requests</h2> 
+				<div style="text-align:center" class="ui three doubling stackable cards">
 					{{#each received}}
 						{{> fullProfile}}
 					{{/each}}
 				</div>
 		</div>
 		<br><br>
-		<div style="float:center">
-			<h2>Sent Requests</h2> 
-				<div class="ui three doubling stackable cards">
+		<div>
+			<h2>Pending</h2> 
+				<div style="text-align:center" class="ui three doubling stackable cards">
 					{{#each sent}}
 						{{> fullProfile}}
 					{{/each}}

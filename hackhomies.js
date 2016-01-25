@@ -197,8 +197,10 @@ if (Meteor.isClient) {
       var index = mySentRequests.indexOf(target);
       var targetReceivedRequests = Profiles.findOne({_id: target}).receivedRequests;
       var targetIndex = targetReceivedRequests.indexOf(Meteor.userId());
-      if(index > -1 && targetIndex > -1){
+      if(index > -1){
         mySentRequests.splice(target, 1);
+      }
+      if(targetIndex > -1){
         targetReceivedRequests.splice(targetIndex, 1);
       }
       Profiles.update(
@@ -219,8 +221,10 @@ if (Meteor.isClient) {
       var targetTeammates = Profiles.findOne({_id: target}).team;
       var targetIndex = targetTeammates.indexOf(Meteor.userId());
       
-      if(index > -1 && targetIndex > -1){
+      if(index > -1){
         myTeammates.splice(index, 1);
+      }
+      if(targetIndex > -1){
         targetTeammates.splice(targetIndex, 1);
       }
       Profiles.update(
@@ -254,8 +258,10 @@ if (Meteor.isClient) {
       var index = myReceivedRequests.indexOf(target);
       var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
       var targetIndex = targetSentRequests.indexOf(Meteor.userId());
-      if(index > -1 && targetIndex > -1){
+      if(index > -1){
         myReceivedRequests.splice(index, 1);
+      }
+      if(targetIndex > -1){
         targetSentRequests.splice(targetIndex, 1);
       }
       Profiles.update(
@@ -275,8 +281,10 @@ if (Meteor.isClient) {
       var index = myReceivedRequests.indexOf(target);
       var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
       var targetIndex = targetSentRequests.indexOf(Meteor.userId());
-      if(index > -1 && targetIndex > -1){
+      if(index > -1){
         myReceivedRequests.splice(index, 1);
+      }
+      if(targetIndex > -1){
         targetSentRequests.splice(targetIndex, 1);
       }
       Profiles.update(
