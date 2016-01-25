@@ -17,6 +17,8 @@ if (Meteor.isClient) {
   //     return Meteor.user() && Meteor.user().username;
   //   }
   // });
+Template.index.rendered=
+$(document).scrollTop( $("#bot").offset().top );
 
   Template.fullProfile.helpers({
    button: function () {

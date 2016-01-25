@@ -1,9 +1,13 @@
 <template name="layout">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel='icon' href='fonts/favicon.ico' type='image/x-icon' >
+	</head>
 	<div class="ui grid">
 		<div class = "sixteen wide column">
 			<div class="ui top fixed menu">
 				<div class="right menu">
-					<div class="ui search">
+					<div class="ui search" style="vertical-align:center;">
 						<div class="ui icon input">
 							<input class="prompt" type="text" placeholder="Search teammates...">
 							<i class="search icon"></i>
@@ -11,7 +15,8 @@
 						<div class="results"></div>
 					</div>
 					<div class="header item">
-						HackHomies
+						HackHomies 
+						<img class="ui mini image" src="http://i649.photobucket.com/albums/uu213/jessie_wang1/ducklogo_zpssoeuardq.png" style="width:16px; height:16px;">
 					</div>
 					<a class="ui item" href="/sign-out">
 						Log Out
