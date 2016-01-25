@@ -15,13 +15,20 @@ if (Meteor.isClient) {
 
   Template.teams.helpers({
     profiles: function () {
-      var myTeam = Profiles.findOne({_id: Meteor.userId()}).team;
+      var targetTeam = Profiles.findOne({_id: this.targetID}).team;
       var Teammates = [];
-      for(var i = 0; i < myTeam.length; i++){
-        var person = Profiles.findOne({_id: myTeam[i]});
+      for(var i = 0; i < targetTeam.length; i++){
+        var person = Profiles.findOne({_id: targetTeam[i]});
         Teammates.push(person);
       }
       return Teammates;
+    },
+    person: function () {
+      if(this.targetID == Meteor.userId()){
+        return 'My';
+      } else {
+        return Profiles.findOne({_id: this.targetID}).name + "'s";
+      }
     }
   });
 
@@ -220,7 +227,7 @@ if (Meteor.isClient) {
       );
       Profiles.update(
         {_id: target},
-        {$set: {sentRequests: mySentRequests}}
+        {$set: {sentRequests: targetSentRequests}}
       );
       return false;
     },
