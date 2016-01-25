@@ -163,7 +163,7 @@ if (Meteor.isClient) {
       var index = myTeammates.indexOf(target);
       var targetTeammates = Profiles.findOne({_id: target}).team;
       var targetIndex = targetTeammates.indexOf(Meteor.userId());
-
+      
       if(index > -1 && targetIndex > -1){
         myTeammates.splice(index, 1);
         targetTeammates.splice(targetIndex, 1);
