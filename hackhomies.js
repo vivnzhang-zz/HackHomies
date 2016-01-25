@@ -57,19 +57,30 @@ if (Meteor.isClient) {
 // $(document).scrollTop( $("#bot").offset().top );
 
   Template.fullProfile.helpers({
-   button: function () {
-    var myProfile = Profiles.findOne({_id: Meteor.userId()});
-    var personID = this._id;
-    if(myProfile.team.indexOf(this._id) > -1){
-      return 'removeTeam';
-    } else if(myProfile.receivedRequests.indexOf(this._id) > -1){
-      return 'respondRequest';
-    } else if(myProfile.sentRequests.indexOf(this._id) > -1){
-      return 'deleteRequest';
-    } else {
-      return 'requestTeam';
+    button: function () {
+      var myProfile = Profiles.findOne({_id: Meteor.userId()});
+      var personID = this._id;
+      if(personID  == Meteor.userId()){
+        return;
+      } else if(myProfile.team.indexOf(this._id) > -1){
+        return 'removeTeam';
+      } else if(myProfile.receivedRequests.indexOf(this._id) > -1){
+        return 'respondRequest';
+      } else if(myProfile.sentRequests.indexOf(this._id) > -1){
+        return 'deleteRequest';
+      } else {
+        return 'requestTeam';
     }
-   }
+  },
+  teamsize: function() {
+    var size = Profiles.findOne({_id: this._id}).team.length;
+    if(size == 1){
+      return "1 Team Member";
+    } else {
+      return size + " Team Members";
+    }
+  }
+
   });
 
   Template.createProfile.events({
@@ -93,7 +104,7 @@ if (Meteor.isClient) {
         );
       else
         Profiles.insert(myProfile);
-
+      //Router.go('browse');
     }, 
 
     
