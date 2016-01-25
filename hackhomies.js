@@ -95,7 +95,20 @@ if (Meteor.isClient) {
     } else {
       return size + " Team Members";
     }
-  }
+  }, 
+  score: function () { //add more to this!!!
+      var p1 = Profiles.findOne({_id: Meteor.userId()});
+      alert("score is called");
+      if(this._id == Meteor.userId()) {
+        return false;
+      }
+      var p2 = Profiles.findOne(this._id);
+      var l1 = p1.level;
+      var l2 = p2.level;
+      alert(l1);
+      alert(l2);
+      return (l1 - l2 < 1);
+    }
 
   });
 

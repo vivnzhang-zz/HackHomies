@@ -1,13 +1,12 @@
 <template name="fullProfile">
-  <div class="ui card">
+  {{#if score}} 
+    <div class="ui card">
     <div class="image">
       <img src={{profpic}}>
     </div>
+    IF STATEMENT
     <div class="content">
       <div class="header">{{name}}</div>
-      <div class="meta">
-        <a>Friends</a>
-      </div>
       <div class="description">
         <p>School: {{school}}</p>
         <p>Email: {{email}}</p>
@@ -29,5 +28,36 @@
 
       {{> DynamicTemplate template=button}}
       <br>
-  </div>
+    </div>
+  {{else}}
+  <div class="ui card">
+    <div class="image">
+      <img src={{profpic}}>
+    </div>
+    ELSE STATEMENT
+    <div class="content">
+      <div class="header">{{name}}</div>
+      <div class="description">
+        <p>School: {{school}}</p>
+        <p>Email: {{email}}</p>
+        <p>Skills: {{mySkills}}</p>
+        <p>Seeking: {{teamSkills}}</p>
+        <p>Level: {{level}}</p>
+        <p>Interests: {{interests}}</p>
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        <p>{{year}}</p>
+      </span>
+      <span>
+        <a href="/users/{{_id}}/team"><i class="user icon"></i>
+        {{teamsize}}</a>
+      </span>
+    </div>
+
+      {{> DynamicTemplate template=button}}
+      <br>
+    </div>
+  {{/if}}
 </template>
