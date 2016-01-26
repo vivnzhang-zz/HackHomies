@@ -119,7 +119,6 @@ if (Meteor.isClient) {
 
   Template.fullProfileHelper.helpers({
     beginner: function () {
-      alert("beginner");
         if(Profiles.findOne(this._id).level == 0) {
           return true;
         } else {
@@ -127,7 +126,6 @@ if (Meteor.isClient) {
         }
     },
     amature: function () {
-      alert("amature");
         if(Profiles.findOne(this._id).level == 1) {
           return true;
         } else {
@@ -135,7 +133,6 @@ if (Meteor.isClient) {
         }
     },
     advanced: function () {
-      alert("advanced");
         if(Profiles.findOne(this._id).level == 2) {
           return true;
         } else {
