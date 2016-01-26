@@ -201,13 +201,13 @@ Template.fullProfileHelper.helpers({
     } else if(myProfile.team.indexOf(personID) > -1){
       return 'removeTeam';
     } else if(myProfile.receivedRequests.indexOf(personID) > -1){
-      if(myProfile.team.length >= 3){
+      if(myProfile.team.length + Profiles.findOne({_id: personID}).team.length > 2){
         return 'disabledRespondRequest';
       }
       return 'respondRequest';
     } else if(myProfile.sentRequests.indexOf(personID) > -1){
       return 'deleteRequest';
-    } else if (myProfile.team.length >= 3){
+    } else if (myProfile.team.length + Profiles.findOne({_id: personID}).team.length > 2){
       return 'disabledRequestTeam';
     } else {
       return 'requestTeam';
@@ -342,13 +342,14 @@ Template.fullProfileHelper.helpers({
 
   Template.fullProfile.events({
     'submit .requestTeam': function (event) {
-      if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
+      var target = event.currentTarget.getAttribute('data-id');
+      if(Profiles.findOne({_id: Meteor.userId()}).team.length + Profiles.findOne({_id: target}).team.length > 4){
         alert('Team limit reached');
         return;
       }
       var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
       //var target = event.target.name.value;
-      var target = event.currentTarget.getAttribute('data-id');
+      
       var targetReceivedRequests = Profiles.findOne({_id: target}).receivedRequests;
       mySentRequests.push(target);
       targetReceivedRequests.push(Meteor.userId());
@@ -411,23 +412,38 @@ Template.fullProfileHelper.helpers({
     },
 
     'click #accept': function(event, template){
-      if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
-        alert('Team limit reached');
-        return;
-      }
+      // if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
+      //   alert('Team limit reached');
+      //   return;
+      // }
+      //alert("called");
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       var target = template.find(".respondRequest").getAttribute('data-id');
       var targetTeammates = Profiles.findOne({_id: target}).team;
+      //alert(myTeammates.length);
+      //alert(targetTeammates.length);
+      for(var i = 0; i < targetTeammates.length; i++){
+        var t = Profiles.findOne({_id: targetTeammates[i]}).team;
+        for(var j = 0; j < myTeammates.length; j++){
+          t.push(myTeammates[j]);
+        }
+        t.push(Meteor.userId());
+        Profiles.update({_id: targetTeammates[i]},{$set: {team: t}});
+        myTeammates.push(targetTeammates[i]);
+      }
+      for(var i = 0; i < myTeammates.length; i++){
+        var t = Profiles.findOne({_id: myTeammates[i]}).team;
+        for(var j = 0; j < targetTeammates.length; j++){
+          t.push(targetTeammates[j]);
+        }
+        t.push(target);
+        Profiles.update({_id: myTeammates[i]},{$set: {team: t}});
+        targetTeammates.push(myTeammates[j]);
+      }
       myTeammates.push(target);
       targetTeammates.push(Meteor.userId());
-      Profiles.update(
-        {_id: Meteor.userId()},
-        {$set: {team: myTeammates}}
-        );
-      Profiles.update(
-        {_id: target},
-        {$set: {team: targetTeammates}}
-        );
+      Profiles.update({_id: Meteor.userId()}, {$set: {team: myTeammates}});
+      Profiles.update({_id: target}, {$set: {team: targetTeammates}});
 
       var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
       var target = template.find(".respondRequest").getAttribute('data-id');
