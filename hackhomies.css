@@ -1,8 +1,10 @@
 body {
   /*background-image: url("/supertransparentducks.png");*/
   /*background-image:url("http://i649.photobucket.com/albums/uu213/jessie_wang1/grayduckstransparent_zpsdzikd9tr.png");*/
+  background-color: #c6ece5;
   background-image: url("http://i649.photobucket.com/albums/uu213/jessie_wang1/supertransparentducks_zpsqxkggxwg.png");
   background-attachment: fixed;
+
 }
 .hackhomies {
   font-family: "Moon Flower", Lato;
