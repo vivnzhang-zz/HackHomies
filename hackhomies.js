@@ -99,7 +99,7 @@ if (Meteor.isClient) {
   score: function () { //add more to this!!!
       var p1 = Profiles.findOne({_id: Meteor.userId()});
       var p2 = Profiles.findOne(this._id);
-      alert("score is called");
+      //alert("score is called");
       if(this._id == Meteor.userId()) {
         return false;
       }
@@ -124,7 +124,7 @@ if (Meteor.isClient) {
       var l1 = p1.level;
       var l2 = p2.level;
       var score  = skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
-      alert(score);
+      //alert(score);
       return score >= 0;
     }
 
