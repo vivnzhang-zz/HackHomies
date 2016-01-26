@@ -1,6 +1,3 @@
-Profiles = new Mongo.Collection('profiles');
-Notifications = new Meteor.Collection('notifications');
-
 if (Meteor.isClient) {
 
   Accounts.ui.config({
@@ -76,13 +73,16 @@ if (Meteor.isClient) {
     button: function () {
       var myProfile = Profiles.findOne({_id: Meteor.userId()});
       var personID = this._id;
+      if(personID.length > 20){
+        personID = this.__originalId;
+      }
       if(personID  == Meteor.userId()){
         return;
-      } else if(myProfile.team.indexOf(this._id) > -1){
+      } else if(myProfile.team.indexOf(personID) > -1){
         return 'removeTeam';
-      } else if(myProfile.receivedRequests.indexOf(this._id) > -1){
+      } else if(myProfile.receivedRequests.indexOf(personID) > -1){
         return 'respondRequest';
-      } else if(myProfile.sentRequests.indexOf(this._id) > -1){
+      } else if(myProfile.sentRequests.indexOf(personID) > -1){
         return 'deleteRequest';
       } else {
         return 'requestTeam';
@@ -103,6 +103,7 @@ if (Meteor.isClient) {
     'submit': function (event) {
       var myProfile = {
         _id: Meteor.userId(),
+        // id: Meteor.userId(),
         //pic: event.target.pic.value,
         name: event.target.name.value,
         school: event.target.school.value,
@@ -284,9 +285,50 @@ if (Meteor.isClient) {
       );
       return false;
     }
-    
-    
+
   });
+
+  /****************************** Search *******************************/
+  // Tracker.autorun(function () {
+  //   var cursor = PlayersIndex.search('Marie'); // search all docs that contain "Marie" in the name or score field
+
+  //   console.log(cursor.fetch()); // log found documents with default search limit
+  //   console.log(cursor.count()); // log count of all found documents
+  // });
+
+  Template.searchBox.helpers({
+    profilesIndex: function(){
+      // var result = [];
+      // //alert(ProfilesIndex.length);
+      // ProfilesIndex.search('').fetch().forEach(function (profile){
+      //   alert("hi");
+      //   var person = Profiles.findOne({_id: profile.__originalId});
+      //   alert('person');
+      //   result.push(person);
+      // })
+      // alert(ProfilesIndex.length);
+      // for(var i = 0; i < ProfilesIndex.length; i++){
+      //   var temp = ProfilesIndex[i];
+      //   var person = Profiles.findOne({_id: temp});
+      //   result.push(person);
+      // }
+      //alert(result);
+      // return result;
+      return ProfilesIndex;
+    },
+    inputAttributes: function(){
+      return { 
+        'class': 'prompt', 
+        'placeholder': 'Search teammates...' 
+      };
+
+    },
+    actualProfile: function (){
+      var actualID = this.__originalId;
+      return Profiles.findOne({_id: actualID});
+    }
+  });
+
  
 }
 

@@ -1,21 +1,14 @@
 <template name="browse">
 	<div id="browse">
-		<!-- <div class="ui search">
-			<div class="ui icon input">
-				<input class="prompt" type="text" placeholder="Search teammates...">
-				<i class="search icon"></i>
-			</div>
-			<div class="results"></div>
-		</div> -->
 		<br>
-		<div style="text-align:center">
-			<!-- <br> -->
-			<h2>Browse teammates</h2> 
-			<div class="ui three doubling stackable cards">
+<!-- 		<div style="text-align:center">
+ -->			<h2>Browse teammates</h2> 
+			{{> searchBox}}
+			<!-- <div class="ui three doubling stackable cards">
 				{{#each profiles}}
-				{{> fullProfile}}
+					{{> fullProfile}}
 				{{/each}}
-			</div>
-		</div>
+			</div> -->
+		<!-- </div> -->
 	</div>
 </template>
