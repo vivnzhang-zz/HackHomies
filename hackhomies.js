@@ -95,7 +95,38 @@ if (Meteor.isClient) {
     } else {
       return size + " Team Members";
     }
-  }
+  }, 
+  score: function () { //add more to this!!!
+      var p1 = Profiles.findOne({_id: Meteor.userId()});
+      var p2 = Profiles.findOne(this._id);
+      alert("score is called");
+      if(this._id == Meteor.userId()) {
+        return false;
+      }
+      var skillMatch = 0;
+      for(var i = 0; i < p1.teamSkills.length; i ++) {
+          for(var j = 0; j < p2.mySkills.length; j ++) {
+            if(p1.teamSkills[i] == p2.mySkills[j]) {
+              skillMatch ++;
+              break;
+            }
+          }
+      }
+      var interestMatch = 0;
+      for(var i = 0; i < p1.interests.length; i ++) {
+          for(var j = 0; j < p2.interests.length; j ++) {
+            if(p1.interests[i] == p2.interests[j]) {
+              interestMatch ++;
+              break;
+            }
+          }
+      }
+      var l1 = p1.level;
+      var l2 = p2.level;
+      var score  = skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
+      alert(score);
+      return score >= 0;
+    }
 
   });
 
