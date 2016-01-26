@@ -258,19 +258,23 @@ Template.fullProfileHelper.helpers({
         teamSkills: $('.teamSkills.dropdown').dropdown('get value'),
         interests: $('.interests.dropdown').dropdown('get value'),
         about: event.target.about.value,
-        team: [],
-        sentRequests: [],
-        receivedRequests: []
       }
 
       // Meteor.call('updateProfile', myProfile);
       if(Profiles.findOne({_id: Meteor.userId()}))
+
         Profiles.update(
           {_id: Meteor.userId()},
           {$set: myProfile}
           );
-      else
+      else{
         Profiles.insert(myProfile);
+        Profiles.update(
+          {_id: Meteor.userId()},
+          {$set: {team: [], sentRequests: [], receivedRequests: []}}
+          );
+      }
+        
       
       // Router.go('browse');
     }, 
