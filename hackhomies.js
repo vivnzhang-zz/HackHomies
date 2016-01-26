@@ -1,6 +1,3 @@
-Profiles = new Mongo.Collection('profiles');
-Notifications = new Meteor.Collection('notifications');
-
 if (Meteor.isClient) {
 
   Accounts.ui.config({
@@ -77,13 +74,16 @@ if (Meteor.isClient) {
     button: function () {
       var myProfile = Profiles.findOne({_id: Meteor.userId()});
       var personID = this._id;
+      if(personID.length > 20){
+        personID = this.__originalId;
+      }
       if(personID  == Meteor.userId()){
         return;
-      } else if(myProfile.team.indexOf(this._id) > -1){
+      } else if(myProfile.team.indexOf(personID) > -1){
         return 'removeTeam';
-      } else if(myProfile.receivedRequests.indexOf(this._id) > -1){
+      } else if(myProfile.receivedRequests.indexOf(personID) > -1){
         return 'respondRequest';
-      } else if(myProfile.sentRequests.indexOf(this._id) > -1){
+      } else if(myProfile.sentRequests.indexOf(personID) > -1){
         return 'deleteRequest';
       } else {
         return 'requestTeam';
@@ -99,16 +99,34 @@ if (Meteor.isClient) {
   }, 
   score: function () { //add more to this!!!
       var p1 = Profiles.findOne({_id: Meteor.userId()});
+      var p2 = Profiles.findOne(this._id);
       alert("score is called");
       if(this._id == Meteor.userId()) {
         return false;
       }
-      var p2 = Profiles.findOne(this._id);
+      var skillMatch = 0;
+      for(var i = 0; i < p1.teamSkills.length; i ++) {
+          for(var j = 0; j < p2.mySkills.length; j ++) {
+            if(p1.teamSkills[i] == p2.mySkills[j]) {
+              skillMatch ++;
+              break;
+            }
+          }
+      }
+      var interestMatch = 0;
+      for(var i = 0; i < p1.interests.length; i ++) {
+          for(var j = 0; j < p2.interests.length; j ++) {
+            if(p1.interests[i] == p2.interests[j]) {
+              interestMatch ++;
+              break;
+            }
+          }
+      }
       var l1 = p1.level;
       var l2 = p2.level;
-      alert(l1);
-      alert(l2);
-      return (l1 - l2 < 1);
+      var score  = skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
+      alert(score);
+      return score >= 0;
     }
 
   });
@@ -117,6 +135,7 @@ if (Meteor.isClient) {
     'submit': function (event) {
       var myProfile = {
         _id: Meteor.userId(),
+        // id: Meteor.userId(),
         //pic: event.target.pic.value,
         name: event.target.name.value,
         school: event.target.school.value,
@@ -298,9 +317,50 @@ if (Meteor.isClient) {
       );
       return false;
     }
-    
-    
+
   });
+
+  /****************************** Search *******************************/
+  // Tracker.autorun(function () {
+  //   var cursor = PlayersIndex.search('Marie'); // search all docs that contain "Marie" in the name or score field
+
+  //   console.log(cursor.fetch()); // log found documents with default search limit
+  //   console.log(cursor.count()); // log count of all found documents
+  // });
+
+  Template.searchBox.helpers({
+    profilesIndex: function(){
+      // var result = [];
+      // //alert(ProfilesIndex.length);
+      // ProfilesIndex.search('').fetch().forEach(function (profile){
+      //   alert("hi");
+      //   var person = Profiles.findOne({_id: profile.__originalId});
+      //   alert('person');
+      //   result.push(person);
+      // })
+      // alert(ProfilesIndex.length);
+      // for(var i = 0; i < ProfilesIndex.length; i++){
+      //   var temp = ProfilesIndex[i];
+      //   var person = Profiles.findOne({_id: temp});
+      //   result.push(person);
+      // }
+      //alert(result);
+      // return result;
+      return ProfilesIndex;
+    },
+    inputAttributes: function(){
+      return { 
+        'class': 'prompt', 
+        'placeholder': 'Search teammates...' 
+      };
+
+    },
+    actualProfile: function (){
+      var actualID = this.__originalId;
+      return Profiles.findOne({_id: actualID});
+    }
+  });
+
  
 }
 

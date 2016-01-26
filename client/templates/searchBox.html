@@ -1,0 +1,25 @@
+<template name="searchBox">
+	
+	<div class="ui search">
+		<div class="ui icon input">
+			{{> EasySearch.Input index=profilesIndex attributes=inputAttributes }}
+			<i class="search icon"></i>
+		</div>
+		<div class="results"></div>
+	</div>
+	<br>
+	<div style="text-align:center" class="ui three doubling stackable cards">
+		{{#EasySearch.Each index=profilesIndex}}
+		{{#with actualProfile}}
+		{{> fullProfile}}
+		{{/with}}
+		<!-- <p>{{name}} - {{__originalId}}</p> -->
+
+		{{/EasySearch.Each}}
+	</div>
+	<ul>
+		<div class="autosuggest-component">
+			{{> EasySearch.Autosuggest index=profilesIndex attributes=inputAttributes}}
+		</div>
+	</ul>
+</template>
