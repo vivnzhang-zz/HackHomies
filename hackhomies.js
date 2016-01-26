@@ -149,6 +149,29 @@ received: function () {
 });
 
 Template.fullProfile.helpers({
+  button: function () {
+    var myProfile = Profiles.findOne({_id: Meteor.userId()});
+    var personID = this._id;
+    if(personID.length > 20){
+      personID = this.__originalId;
+    }
+    if(personID  == Meteor.userId()){
+      return;
+    } else if(myProfile.team.indexOf(personID) > -1){
+      return 'removeTeam';
+    } else if(myProfile.receivedRequests.indexOf(personID) > -1){
+      if(myProfile.team.length >= 3){
+        return 'disabledRespondRequest';
+      }
+      return 'respondRequest';
+    } else if(myProfile.sentRequests.indexOf(personID) > -1){
+      return 'deleteRequest';
+    } else if (myProfile.team.length >= 3){
+      return 'disabledRequestTeam';
+    } else {
+      return 'requestTeam';
+    }
+  },
   compatable: function() {
     if(this._id == Meteor.userId()) {
         return false;
