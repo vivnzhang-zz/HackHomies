@@ -366,6 +366,7 @@ Template.fullProfileHelper.helpers({
     }
   });
 
+  /***************************** Button Events ***************************/
   Template.fullProfile.events({
     'submit .requestTeam': function (event) {
       var target = event.currentTarget.getAttribute('data-id');
@@ -451,10 +452,25 @@ Template.fullProfileHelper.helpers({
       Profiles.update({_id: Meteor.userId()}, {$set: {team: myTeammates}});
       Profiles.update({_id: target}, {$set: {team: targetTeammates}});
 
+      //delete from received requests
       var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
       var target = template.find(".respondRequest").getAttribute('data-id');
-      var index = myReceivedRequests.indexOf(target);
       var targetSentRequests = Profiles.findOne({_id: target}).sentRequests;
+      // var targetIndex;
+      // for(var i = 0; i < myTeammates - 1; i++){
+      //   var myTeamReceivedRequests = Profiles.findOne({_id: myTeammates[i]}).receivedRequests;
+      //   var myTeamIndex = myTeam.find({_id: target});
+      //   targetIndex = targetSentRequests.find({_id: myTeammates[i]});
+      //   if(myTeamIndex > -1){
+      //     myTeamReceivedRequests.splice(index, 1);
+      //   }
+      //   if(targetIndex > -1){
+      //     targetSentRequests.splice(targetIndex, 1);
+      //   }
+      //   Profiles.update({_id: myTeamates[i]},{$set: {receivedRequests: myTeamReceivedRequests}});
+      //   Profiles.update({_id: target},{$set: {sentRequests: targetSentRequests}});
+      // }
+      var index = myReceivedRequests.indexOf(target);
       var targetIndex = targetSentRequests.indexOf(Meteor.userId());
       if(index > -1){
         myReceivedRequests.splice(index, 1);
@@ -502,11 +518,6 @@ Template.fullProfileHelper.helpers({
     'submit .leaveTeam': function(event){
       //alert('clicked');
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      //alert(myTeammates.length);
-      //var target = event.currentTarget.getAttribute('data-id');
-      //var index = myTeammates.indexOf(target);
-      //var targetTeammates = Profiles.findOne({_id: target}).team;
-      //var targetIndex = targetTeammates.indexOf(Meteor.userId());
       for(var i = 0; i < myTeammates.length; i++){
         var t = Profiles.findOne({_id: myTeammates[i]}).team;
         //alert(t);
