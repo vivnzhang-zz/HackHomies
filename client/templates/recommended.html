@@ -1,0 +1,14 @@
+<template name="recommended">
+	<div id="recommended">
+		<br>
+		<h2>Recommended Teammates</h2> 
+			<div class="ui three doubling stackable cards">
+			
+			{{#each profiles}}
+				{{#if compatable}}
+					{{> fullProfile}}
+				{{/if}}
+			{{/each}}
+			</div>
+	</div>
+</template>
