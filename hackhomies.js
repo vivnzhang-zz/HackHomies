@@ -7,6 +7,7 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 
+
   Template.nav.helpers({
     teamCount: function () {
       return Profiles.findOne({_id: Meteor.userId()}).team.length;

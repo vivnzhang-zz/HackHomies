@@ -1,5 +1,4 @@
 <template name="index">
-
   <head>
     <!-- Standard Meta -->
     <meta charset="utf-8" />
@@ -43,7 +42,7 @@
       margin-left: 0.5em;
     }
     .masthead h1.ui.header {
-      margin-top: 0em;
+      margin-top: 3em;
       margin-bottom: 0em;
       font-size: 4em;
       font-weight: normal;
@@ -88,15 +87,14 @@
     .secondary.pointing.menu .toc.item {
       display: none;
     }
-
-    #stupidform {
-      position:relative;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
+      #stupidform {
+        position:relative;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    #login-part{}
     @media only screen and (max-width: 700px) {
       .ui.fixed.menu {
         display: none !important;
@@ -132,96 +130,216 @@
     $(document)
     .ready(function() {
 
-        // fix menu when passed
-        $('.masthead')
-        .visibility({
-          once: false,
-          onBottomPassed: function() {
-            $('.fixed.menu').transition('fade in');
-          },
-          onBottomPassedReverse: function() {
-            $('.fixed.menu').transition('fade out');
-          }
-        })
-        ;
-
-        // create sidebar and attach to menu open
-        $('.ui.sidebar')
-        .sidebar('attach events', '.toc.item')
-        ;
-
+      // fix menu when passed
+      $('.masthead')
+      .visibility({
+        once: false,
+        onBottomPassed: function() {
+          $('.fixed.menu').transition('fade in');
+        },
+        onBottomPassedReverse: function() {
+          $('.fixed.menu').transition('fade out');
+        }
       })
+      ;
+
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+      .sidebar('attach events', '.toc.item')
+      ;
+
+    })
     ;
-    </script>
-  </head>
-  <body>
 
+    //  var hashTagActive = "";
+    // $(".scroll").click(function (event) {
+    //     if(hashTagActive != this.hash) { //this will prevent if the user click several times the same link to freeze the scroll.
+    //         event.preventDefault();
+    //         //calculate destination place
+    //         var dest = 0;
+    //         if ($(this.hash).offset().top > $(document).height() - $(window).height()) {
+    //             dest = $(document).height() - $(window).height();
+    //         } else {
+    //             dest = $(this.hash).offset().top;
+    //         }
+    //         //go to destination
+    //         $('html,body').animate({
+    //             scrollTop: dest
+    //         }, 2000, 'swing');
+    //         hashTagActive = this.hash;
+    //     }
+    // });
 
-    <!-- Page Contents -->
-    <div class="pusher">
-      <div class="ui grid">
-        <div class = "sixteen wide column">
-          <div class="ui inverted vertical masthead center aligned segment">
+$(".scroll").click(function(event){
+ event.preventDefault();
+         //calculate destination place
+         var dest=0;
+         if($(this.hash).offset().top > $(document).height()-$(window).height()){
+          dest=$(document).height()-$(window).height();
+        }else{
+          dest=$(this.hash).offset().top;
+        }
+         //go to destination
+         $('html,body').animate({scrollTop:dest}, 1000,'swing');
+       });
 
+</script>
+</head>
+<body>
 
-            <div class="ui text container">
-              <!-- <div class="ui divider"></div> -->
-              <!-- <h1 class="ui inverted header"> -->
-              <div class="frontpagespacing">
-                <div class="ui inverted header">
-                  <div class="hackhomies">
-                    HackHomies
-                  </div>
-                </div>
-                <!-- </h1> -->
-                <br>
-                <br>
-                <br>
-                <!-- <div class="ui divider"></div> -->
-              </div>
-              <img src="http://i649.photobucket.com/albums/uu213/jessie_wang1/duckcopy_zps1meckvp1.png" style="width:200px;height:200px;">
-              <!-- style="width:150px;height:100px; -->
-            </div>
-          </div>
+  <!-- Following Menu -->
+  <div class="ui large top fixed hidden menu">
+    <div class="ui container">
+      <a class="active item">Home</a>
+      <a class="item">Work</a>
+      <a class="item">Company</a>
+      <a class="item">Careers</a>
+      <div class="right menu">
+        <div class="item">
+          <a class="ui button">Log in</a>
         </div>
-        <div class="row">
-          <p></p>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-        </div>
-        <div class = "five wide column"></div>
-        <div class = "six wide column">
-          <div class="ui middle aligned stackable grid container">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <!--<script> document.getElementById("stupidform").style.width = "40%"; </script>-->
-            <div id="stupidform">
-              {{> atForm}}
-            </div>
-          </div>
-        </div>
-        <div class = "five wide column"></div>
-        <div class="row">
-          <p></p>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
+        <div class="item">
+          <a class="ui primary button">Sign Up</a>
         </div>
       </div>
     </div>
+  </div>
 
-  </body>
+  <!-- Sidebar Menu -->
+  <div class="ui vertical inverted sidebar menu">
+    <a class="active item">Home</a>
+    <a class="item">Work</a>
+    <a class="item">Company</a>
+    <a class="item">Careers</a>
+    <a class="item">Login</a>
+    <a class="item">Signup</a>
+  </div>
 
+
+  <!-- Page Contents -->
+  <div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+
+      <div class="ui text container">
+        <!-- <div class="ui divider"></div> -->
+        <!-- <h1 class="ui inverted header"> -->
+        <div class="frontpagespacing">
+          <div class="ui inverted header">
+            <div class="hackhomies">
+              HackHomies
+            </div>
+          </div>
+          <!-- </h1> -->
+          <br>
+          <br>
+          <br>
+          <!-- <div class="ui divider"></div> -->
+        </div>
+
+        <!-- <img src="/duck.png" style="width:200px;height:200px;"> -->
+
+        <img src="/transparentgrayduck.png" style="width:160px;height:160px">
+        <a class="scroll" href="#login">
+             <!--  <input type="button" onClick="document.getElementById('middle').scrollIntoView();" />
+             <input type="image" src="/duck.png" name="jumptologin" class="btTxt submit" id="saveForm" /> -->
+             <img src="/duck.png" style="width:160px;height:160px;"></a>
+             <img src="/transparentgrayduck.png" style="width:160px;height:160px">
+           </div>
+
+         </div>
+         <section id="login">
+          <div class="ui vertical stripe segment">
+            <div class="ui middle aligned stackable grid container">
+              <div class="row">
+                <div class="five wide column"></div>
+                <div class="six wide column">
+                  <div id="stupidform">
+                    {{> atForm}}
+                  </div>
+                </div>
+                <div class="five wide column"></div>
+              </div>
+      <!-- <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">We Help Companies and Companions</h3>
+          <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>
+          <h3 class="ui header">We Make Bananas That Can Dance</h3>
+          <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
+        </div>
+        <div class="six wide right floated column">
+          <img src="assets/images/wireframe/white-image.png" class="ui large bordered rounded image">
+        </div>
+      </div>
+      <div class="row"> -->
+      <!--   <div class="center aligned column">
+          <a class="ui huge button">Check Them Out</a>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</section>
+
+
+<div class="ui vertical  quote segment">
+  <div class="ui equal width stackable internally celled grid">
+    <div class="center aligned row">
+      <div class="column">
+        <p></p>
+      </div>
+      <div class="column">
+        <p>
+          <!-- <img src="assets/images/avatar/nan.jpg" class="ui avatar image"> <b>Nan</b> Chief Fun Officer Acme Toys -->
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="ui vertical stripe segment">
+  <div class="ui text container">
+    <h3 class="ui header">Breaking The Grid, Grabs Your Attention</h3>
+    <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
+    <a class="ui large button">Read More</a>
+    <h4 class="ui horizontal header divider">
+      <a href="#">Case Studies</a>
+    </h4>
+    <h3 class="ui header">Did We Tell You About Our Bananas?</h3>
+    <p>Yes I know you probably disregarded the earlier boasts as non-sequitor filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>
+    <a class="ui large button">I'm Still Quite Interested</a>
+  </div>
+</div> -->
+
+
+<div class="ui inverted vertical footer segment">
+ <!--  <div class="ui container">
+    <div class="ui stackable inverted divided equal height stackable grid">
+      <div class="three wide column">
+        <h4 class="ui inverted header">About</h4>
+        <div class="ui inverted link list">
+          <a href="#" class="item">Sitemap</a>
+          <a href="#" class="item">Contact Us</a>
+          <a href="#" class="item">Religious Ceremonies</a>
+          <a href="#" class="item">Gazebo Plans</a>
+        </div>
+      </div>
+      <div class="three wide column">
+        <h4 class="ui inverted header">Services</h4>
+        <div class="ui inverted link list">
+          <a href="#" class="item">Banana Pre-Order</a>
+          <a href="#" class="item">DNA FAQ</a>
+          <a href="#" class="item">How To Access</a>
+          <a href="#" class="item">Favorite X-Men</a>
+        </div>
+      </div>
+      <div class="seven wide column">
+        <h4 class="ui inverted header">Footer Header</h4>
+        <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+      </div>
+    </div>
+  </div> -->
+</div>
+</div>
+
+</body>
 </template>
