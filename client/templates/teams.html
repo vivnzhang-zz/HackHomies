@@ -1,16 +1,22 @@
 <template name="teams">
-		<div style="text-align:center;">
-			<div style="font-family:'Moon Flower Bold'; font-size:60px;">{{person}} Team</div> 
-			<br>
-			<p><i>See your hack-homies here. Remember, your homies can also approve other homies to be added to your team.</i></p><br>
-				<div style="text-align:center" class="ui three doubling stackable cards">
-					{{#each profiles}}
-					{{> fullProfile}}
-					{{/each}}
-				</div>
+
+	<div style="text-align:center;">
+		<div style="font-family:'Moon Flower Bold'; font-size:60px;">{{person}} Team</div>
+		<br> 
+		{{#if myTeam}}
+		<p> See your hack-homies here. Remember, your homies can also approve other homies to be added to your team.</p>
+		{{/if}}
+		<br>
+		<div style="text-align:center" class="ui three doubling stackable cards">
+			{{#each profiles}}
+			{{> fullProfile}}
+			{{/each}}
+		
 		</div>
 		{{#if myTeam}}
 		<br>
 		{{> leaveTeam}}
 		{{/if}}
+	</div>
+	
 </template>
