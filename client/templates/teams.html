@@ -5,6 +5,8 @@
 		<br> 
 		{{#if myTeam}}
 		<p> See your hack-homies here. Remember, your homies can also approve other homies to be added to your team.</p>
+		<br>
+		{{> leaveTeam}}
 		{{/if}}
 		<br>
 		<div style="text-align:center" class="ui three doubling stackable cards">
@@ -13,10 +15,6 @@
 			{{/each}}
 		
 		</div>
-		{{#if myTeam}}
-		<br>
-		{{> leaveTeam}}
-		{{/if}}
 	</div>
 	
 </template>
