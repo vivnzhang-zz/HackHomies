@@ -443,8 +443,8 @@ Template.fullProfileHelper.helpers({
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       var target = template.find(".respondRequest").getAttribute('data-id');
       var targetTeammates = Profiles.findOne({_id: target}).team;
-      //alert(myTeammates.length);
-      //alert(targetTeammates.length);
+      var myLength = myTeammates.length;
+      var targetLength = targetTeammates.length;
       for(var i = 0; i < targetTeammates.length; i++){
         var t = Profiles.findOne({_id: targetTeammates[i]}).team;
         for(var j = 0; j < myTeammates.length; j++){
@@ -454,7 +454,7 @@ Template.fullProfileHelper.helpers({
         Profiles.update({_id: targetTeammates[i]},{$set: {team: t}});
         myTeammates.push(targetTeammates[i]);
       }
-      for(var i = 0; i < myTeammates.length; i++){
+      for(var i = 0; i < myTeammates.length - targetLength; i++){
         var t = Profiles.findOne({_id: myTeammates[i]}).team;
         for(var j = 0; j < targetTeammates.length; j++){
           t.push(targetTeammates[j]);
