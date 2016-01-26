@@ -4,6 +4,7 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 
+
   Template.nav.helpers({
     teamCount: function () {
       if(Profiles.findOne({_id: Meteor.userId()})){
@@ -19,11 +20,86 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.browse.helpers({
-    profiles: function () {
-      return Profiles.find({});
-    }
-  });
+  Template.browse.rendered = function(){
+    Profiles.find({}).fetch().sort(compare);
+       function compare(p1, p2) {
+          function score(p1, p2) { 
+            var skillMatch = 0;
+            for(var i = 0; i < p1.teamSkills.length; i ++) {
+                for(var j = 0; j < p2.mySkills.length; j ++) {
+                  if(p1.teamSkills[i] == p2.mySkills[j]) {
+                    skillMatch ++;
+                    break;
+                  }
+                }
+            }
+          var interestMatch = 0;
+          for(var i = 0; i < p1.interests.length; i ++) {
+              for(var j = 0; j < p2.interests.length; j ++) {
+                if(p1.interests[i] == p2.interests[j]) {
+                  interestMatch ++;
+                  break;
+                }
+              }
+          }
+          var l1 = p1.level;
+          var l2 = p2.level;
+          return skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
+        }
+        var p = Profiles.findOne({_id: Meteor.userId()});
+        var score1 = score(p, p1);
+        var score2 = score(p, p2);
+        if(score1 < score2) {
+          return 1;
+        } else if(score1 > score2) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+  };
+
+  // Template.browse.helpers({
+  //   profiles: function () {
+  //     alert('hi');
+  //     Profiles.find({}).fetch().sort(compare);
+  //      function compare(p1, p2) {
+  //         function score(p1, p2) { 
+  //           var skillMatch = 0;
+  //           for(var i = 0; i < p1.teamSkills.length; i ++) {
+  //               for(var j = 0; j < p2.mySkills.length; j ++) {
+  //                 if(p1.teamSkills[i] == p2.mySkills[j]) {
+  //                   skillMatch ++;
+  //                   break;
+  //                 }
+  //               }
+  //           }
+  //         var interestMatch = 0;
+  //         for(var i = 0; i < p1.interests.length; i ++) {
+  //             for(var j = 0; j < p2.interests.length; j ++) {
+  //               if(p1.interests[i] == p2.interests[j]) {
+  //                 interestMatch ++;
+  //                 break;
+  //               }
+  //             }
+  //         }
+  //         var l1 = p1.level;
+  //         var l2 = p2.level;
+  //         return skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
+  //       }
+  //       var p = Profiles.findOne({_id: Meteor.userId()});
+  //       var score1 = score(p, p1);
+  //       var score2 = score(p, p2);
+  //       if(score1 < score2) {
+  //         return 1;
+  //       } else if(score1 > score2) {
+  //         return -1;
+  //       } else {
+  //         return 0;
+  //       }
+  //     }
+  //   },
+  // });
 
   Template.teams.helpers({
     profiles: function () {
@@ -73,36 +149,35 @@ received: function () {
 });
 
 Template.fullProfile.helpers({
-  score: function () { //add more to this!!!
-    var p1 = Profiles.findOne({_id: Meteor.userId()});
-    var p2 = Profiles.findOne(this._id);
-    // alert("score is called");
+  compatable: function() {
     if(this._id == Meteor.userId()) {
-      return false;
+        return false;
+    } else {
+      return score(Profiles.findOne({_id: Meteor.userId()}), Profiles.findOne(this._id)) >= 0;
     }
-    var skillMatch = 0;
-    for(var i = 0; i < p1.teamSkills.length; i ++) {
-      for(var j = 0; j < p2.mySkills.length; j ++) {
-        if(p1.teamSkills[i] == p2.mySkills[j]) {
-          skillMatch ++;
-          break;
-        }
+    function score(p1, p2) { //add more to this!!!
+      var skillMatch = 0;
+      for(var i = 0; i < p1.teamSkills.length; i ++) {
+          for(var j = 0; j < p2.mySkills.length; j ++) {
+            if(p1.teamSkills[i] == p2.mySkills[j]) {
+              skillMatch ++;
+              break;
+            }
+          }
       }
-    }
-    var interestMatch = 0;
-    for(var i = 0; i < p1.interests.length; i ++) {
-      for(var j = 0; j < p2.interests.length; j ++) {
-        if(p1.interests[i] == p2.interests[j]) {
-          interestMatch ++;
-          break;
-        }
+      var interestMatch = 0;
+      for(var i = 0; i < p1.interests.length; i ++) {
+          for(var j = 0; j < p2.interests.length; j ++) {
+            if(p1.interests[i] == p2.interests[j]) {
+              interestMatch ++;
+              break;
+            }
+          }
       }
+      var l1 = p1.level;
+      var l2 = p2.level;
+      return skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
     }
-    var l1 = p1.level;
-    var l2 = p2.level;
-    var score  = skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
-    // alert(score);
-    return score >= 0;
   }
 });
 
@@ -142,9 +217,9 @@ Template.fullProfileHelper.helpers({
     } else {
       return size + " Team Members";
     }
-  }
 
-  });
+  }
+});
 
   Template.createProfile.events({
     'submit': function (event) {
