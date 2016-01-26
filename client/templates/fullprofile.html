@@ -1,10 +1,11 @@
 <template name="fullProfile">
   {{#if compatable}} 
     <div class="ui card">
+      <img src="/recommendedstar.png" style="width:235.25px;height:56.25px;padding-left:43px;">
     <div class="image">
       <img src={{profpic}}>
     </div>
-    IF STATEMENT
+    <!-- IF STATEMENT -->
 
     {{> fullProfileHelper}}
     </div>
@@ -13,7 +14,6 @@
     <div class="image">
       <img src={{profpic}}>
     </div>
-    ELSE STATEMENT
     {{> fullProfileHelper}}
     </div>
   {{/if}}
