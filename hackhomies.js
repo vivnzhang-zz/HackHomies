@@ -117,6 +117,9 @@ if (Meteor.isClient) {
       } else {
         return Profiles.findOne({_id: this.targetID}).name + "'s";
       }
+    },
+    myTeam: function (){
+      return (this.targetID == Meteor.userId() && Profiles.findOne({_id: this.targetID}).team.length > 0);
     }
   });
 
@@ -410,30 +413,6 @@ Template.fullProfileHelper.helpers({
       return false;
     },
 
-    'submit .removeTeam': function (event) {
-      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
-      var target = event.currentTarget.getAttribute('data-id');
-      var index = myTeammates.indexOf(target);
-      var targetTeammates = Profiles.findOne({_id: target}).team;
-      var targetIndex = targetTeammates.indexOf(Meteor.userId());
-      
-      if(index > -1){
-        myTeammates.splice(index, 1);
-      }
-      if(targetIndex > -1){
-        targetTeammates.splice(targetIndex, 1);
-      }
-      Profiles.update(
-        {_id: Meteor.userId()},
-        {$set: {team: myTeammates}}
-        );
-      Profiles.update(
-        {_id: target},
-        {$set: {team: targetTeammates}}
-        );
-      return false;
-    },
-
     'click #accept': function(event, template){
       // if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
       //   alert('Team limit reached');
@@ -448,18 +427,22 @@ Template.fullProfileHelper.helpers({
       for(var i = 0; i < targetTeammates.length; i++){
         var t = Profiles.findOne({_id: targetTeammates[i]}).team;
         for(var j = 0; j < myTeammates.length; j++){
-          t.push(myTeammates[j]);
+          if(t.indexOf(myTeammates[j]) == -1)
+            t.push(myTeammates[j]);
         }
-        t.push(Meteor.userId());
+        if(t.indexOf(Meteor.userId()) == -1)
+          t.push(Meteor.userId());
         Profiles.update({_id: targetTeammates[i]},{$set: {team: t}});
         myTeammates.push(targetTeammates[i]);
       }
       for(var i = 0; i < myTeammates.length - targetLength; i++){
         var t = Profiles.findOne({_id: myTeammates[i]}).team;
         for(var j = 0; j < targetTeammates.length; j++){
-          t.push(targetTeammates[j]);
+          if(t.indexOf(targetTeammates[j]) == -1)
+            t.push(targetTeammates[j]);
         }
-        t.push(target);
+        if(t.indexOf(target) == -1)
+          t.push(target);
         Profiles.update({_id: myTeammates[i]},{$set: {team: t}});
         targetTeammates.push(myTeammates[j]);
       }
@@ -513,6 +496,33 @@ Template.fullProfileHelper.helpers({
       return false;
     }
 
+  });
+
+  Template.teams.events({
+    'submit .leaveTeam': function(event){
+      //alert('clicked');
+      var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      //alert(myTeammates.length);
+      //var target = event.currentTarget.getAttribute('data-id');
+      //var index = myTeammates.indexOf(target);
+      //var targetTeammates = Profiles.findOne({_id: target}).team;
+      //var targetIndex = targetTeammates.indexOf(Meteor.userId());
+      for(var i = 0; i < myTeammates.length; i++){
+        var t = Profiles.findOne({_id: myTeammates[i]}).team;
+        //alert(t);
+        var index = t.indexOf(Meteor.userId());
+        //alert(index);
+        if(index > -1){
+          t.splice(index, 1);
+        }
+        Profiles.update({_id: myTeammates[i]},{$set: {team: t}});
+      }
+      Profiles.update(
+        {_id: Meteor.userId()},
+        {$set: {team: []}}
+        );
+      return false;
+    }
   });
 
   /****************************** Search *******************************/

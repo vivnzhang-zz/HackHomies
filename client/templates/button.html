@@ -14,7 +14,7 @@
 
 <template name="removeTeam">
 	<form class="removeTeam" data-id="{{_id}}">
-		<button class="ui button" type="submit" name="remove-member">Remove</button>
+		<button class="ui disabled button" type="submit" name="remove-member">Homie &lt;3</button>
 	</form>
 </template>
 
@@ -54,4 +54,10 @@
 
 <template name="reachedLimit">
 	<p>Team limit reached</p>
+</template>
+
+<template name="leaveTeam">
+	<form class="leaveTeam">
+		<button class="ui button" type="submit" name="leaveTeam">Leave Team</button>
+	</form>
 </template>
