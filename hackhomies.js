@@ -81,6 +81,42 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.recommended.helpers({
+    profiles: function() {
+      return Profiles.find({});
+    },
+    compatable: function() {
+      if(this._id == Meteor.userId()) {
+          return false;
+      } else {
+        return score(Profiles.findOne({_id: Meteor.userId()}), Profiles.findOne(this._id)) >= 0;
+      }
+      function score(p1, p2) { //add more to this!!!
+        var skillMatch = 0;
+        for(var i = 0; i < p1.teamSkills.length; i ++) {
+            for(var j = 0; j < p2.mySkills.length; j ++) {
+              if(p1.teamSkills[i] == p2.mySkills[j]) {
+                skillMatch ++;
+                break;
+              }
+            }
+        }
+        var interestMatch = 0;
+        for(var i = 0; i < p1.interests.length; i ++) {
+            for(var j = 0; j < p2.interests.length; j ++) {
+              if(p1.interests[i] == p2.interests[j]) {
+                interestMatch ++;
+                break;
+              }
+            }
+        }
+        var l1 = p1.level;
+        var l2 = p2.level;
+        return skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
+      }
+    }
+  });
+
   Template.requests.helpers({
     sent: function () {
       var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
