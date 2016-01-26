@@ -181,13 +181,13 @@ Template.fullProfile.helpers({
     } else if(myProfile.team.indexOf(personID) > -1){
       return 'removeTeam';
     } else if(myProfile.receivedRequests.indexOf(personID) > -1){
-      if(myProfile.team.length >= 3){
+      if(myProfile.team.length + Profiles.findOne({_id: personID}).team.length > 2){
         return 'disabledRespondRequest';
       }
       return 'respondRequest';
     } else if(myProfile.sentRequests.indexOf(personID) > -1){
       return 'deleteRequest';
-    } else if (myProfile.team.length >= 3){
+    } else if (myProfile.team.length + Profiles.findOne({_id: personID}).team.length > 2){
       return 'disabledRequestTeam';
     } else {
       return 'requestTeam';
@@ -233,29 +233,6 @@ Template.fullProfileHelper.helpers({
       return "Me";
     } 
     return Profiles.findOne({_id: this._id}).name;
-  },
-  button: function () {
-    var myProfile = Profiles.findOne({_id: Meteor.userId()});
-    var personID = this._id;
-    if(personID.length > 20){
-      personID = this.__originalId;
-    }
-    if(personID  == Meteor.userId()){
-      return;
-    } else if(myProfile.team.indexOf(personID) > -1){
-      return 'removeTeam';
-    } else if(myProfile.receivedRequests.indexOf(personID) > -1){
-      if(myProfile.team.length + Profiles.findOne({_id: personID}).team.length > 2){
-        return 'disabledRespondRequest';
-      }
-      return 'respondRequest';
-    } else if(myProfile.sentRequests.indexOf(personID) > -1){
-      return 'deleteRequest';
-    } else if (myProfile.team.length + Profiles.findOne({_id: personID}).team.length > 2){
-      return 'disabledRequestTeam';
-    } else {
-      return 'requestTeam';
-    }
   },
   teamsize: function() {
     var size = Profiles.findOne({_id: this._id}).team.length;
