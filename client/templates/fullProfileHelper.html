@@ -6,25 +6,26 @@
 			</a>
 		</span>
 	</div>
-	{{#if beginner}}
-		beginner
-	{{else}}
-		{{#if amature}}
-			amature
-		{{else}}
-			advanced
-		{{/if}}
-	{{/if}}
 
 	<div class="content">
 		<div class="header">{{personName}}</div>
+		{{#if beginner}}
+		<img src="/babyduck1.png" style="width:150px;height:150px; float:center;">
+		{{else}}
+		{{#if amature}}
+		<img src="/teenduck.png" style="width:150px;height:150px; float:center;">
+		{{else}}
+		<img src="/grandpaduck.png" style="width:150px;height:150px; float:center;">
+		{{/if}}
+		{{/if}}
+		
 		<div class="description">
 			<p>School: {{school}}</p>
 			<p>Email: {{email}}</p>
 			<p>Skills: {{mySkills}}</p>
 			<p>Seeking: {{teamSkills}}</p>
-			<p>Level: {{level}}</p>
 			<p>Interests: {{interests}}</p>
+			<p>About: {{about}}</p>
 		</div>
 	</div>
 	
