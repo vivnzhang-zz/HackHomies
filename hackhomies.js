@@ -7,10 +7,16 @@ if (Meteor.isClient) {
 
   Template.nav.helpers({
     teamCount: function () {
-      return Profiles.findOne({_id: Meteor.userId()}).team.length;
+      if(Profiles.findOne({_id: Meteor.userId()})){
+        return Profiles.findOne({_id: Meteor.userId()}).team.length;
+      }
+      return 0;
     },
     requestCount: function () {
-      return Profiles.findOne({_id: Meteor.userId()}).receivedRequests.length;
+      if(Profiles.findOne({_id: Meteor.userId()})){
+        return Profiles.findOne({_id: Meteor.userId()}).receivedRequests.length;
+      }
+      return 0;
     }
   });
 
@@ -128,50 +134,21 @@ if (Meteor.isClient) {
       // return Profiles.find({
       //   _id: {$in: mySentRequests}
       // });
-    },
-    received: function () {
-      var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
-      var Teammates = [];
-      for(var i = 0; i < myReceivedRequests.length; i++){
-        var person = Profiles.findOne({_id: myReceivedRequests[i]});
-        Teammates.push(person);
-      }
-      return Teammates;
+},
+received: function () {
+  var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
+  var Teammates = [];
+  for(var i = 0; i < myReceivedRequests.length; i++){
+    var person = Profiles.findOne({_id: myReceivedRequests[i]});
+    Teammates.push(person);
+  }
+  return Teammates;
 
-    },
-    
-  });
+},
 
-// Template.index.rendered=
-// $(document).scrollTop( $("#bot").offset().top );
+});
 
-  Template.fullProfile.helpers({
-    button: function () {
-      var myProfile = Profiles.findOne({_id: Meteor.userId()});
-      var personID = this._id;
-      if(personID.length > 20){
-        personID = this.__originalId;
-      }
-      if(personID  == Meteor.userId()){
-        return;
-      } else if(myProfile.team.indexOf(personID) > -1){
-        return 'removeTeam';
-      } else if(myProfile.receivedRequests.indexOf(personID) > -1){
-        return 'respondRequest';
-      } else if(myProfile.sentRequests.indexOf(personID) > -1){
-        return 'deleteRequest';
-      } else {
-        return 'requestTeam';
-    }
-  },
-  teamsize: function() {
-    var size = Profiles.findOne({_id: this._id}).team.length;
-    if(size == 1){
-      return "1 Team Member";
-    } else {
-      return size + " Team Members";
-    }
-  }, 
+Template.fullProfile.helpers({
   compatable: function() {
     if(this._id == Meteor.userId()) {
         return false;
@@ -202,7 +179,50 @@ if (Meteor.isClient) {
       return skillMatch/p1.teamSkills.length + interestMatch/p1.interests.length - Math.abs(l1 - l2);
     }
   }
-  });
+});
+
+Template.fullProfileHelper.helpers({
+   personName: function() {
+    //alert(this._id);
+    //alert(Meteor.userId());
+    if(this._id == Meteor.userId()){
+      return "Me";
+    } 
+    return Profiles.findOne({_id: this._id}).name;
+  },
+  button: function () {
+    var myProfile = Profiles.findOne({_id: Meteor.userId()});
+    var personID = this._id;
+    if(personID.length > 20){
+      personID = this.__originalId;
+    }
+    if(personID  == Meteor.userId()){
+      return;
+    } else if(myProfile.team.indexOf(personID) > -1){
+      return 'removeTeam';
+    } else if(myProfile.receivedRequests.indexOf(personID) > -1){
+      if(myProfile.team.length >= 3){
+        return 'disabledRespondRequest';
+      }
+      return 'respondRequest';
+    } else if(myProfile.sentRequests.indexOf(personID) > -1){
+      return 'deleteRequest';
+    } else if (myProfile.team.length >= 3){
+      return 'disabledRequestTeam';
+    } else {
+      return 'requestTeam';
+    }
+  },
+  teamsize: function() {
+    var size = Profiles.findOne({_id: this._id}).team.length;
+    if(size == 1){
+      return "1 Team Member";
+    } else {
+      return size + " Team Members";
+    }
+
+  }
+});
 
   Template.createProfile.events({
     'submit': function (event) {
@@ -228,7 +248,7 @@ if (Meteor.isClient) {
         Profiles.update(
           {_id: Meteor.userId()},
           {$set: myProfile}
-        );
+          );
       else
         Profiles.insert(myProfile);
       
@@ -312,12 +332,6 @@ if (Meteor.isClient) {
       })
     ;
     this.$(".ui.fluid.dropdown").dropdown();
-    // if(Profiles.findOne({_id: Meteor.userId()})){
-    //   this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
-    // }
-    // this.$("#mySkills").dropdown();
-    // this.$("#teamSkills").dropdown();
-    // this.$("#interests").dropdown();
     if(Profiles.findOne({_id: Meteor.userId()})){
       this.$(".level").dropdown('set selected',  Profiles.findOne({_id: Meteor.userId()}).level)
       this.$("#mySkills").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).mySkills);
@@ -328,7 +342,10 @@ if (Meteor.isClient) {
 
   Template.fullProfile.events({
     'submit .requestTeam': function (event) {
-      //must have already created profile
+      if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
+        alert('Team limit reached');
+        return;
+      }
       var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
       //var target = event.target.name.value;
       var target = event.currentTarget.getAttribute('data-id');
@@ -338,11 +355,11 @@ if (Meteor.isClient) {
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {sentRequests: mySentRequests}}
-      );
+        );
       Profiles.update(
         {_id: target},
         {$set: {receivedRequests: targetReceivedRequests}}
-      );
+        );
       return false;
     },
 
@@ -361,11 +378,11 @@ if (Meteor.isClient) {
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {sentRequests: mySentRequests}}
-      );
+        );
       Profiles.update(
         {_id: target},
         {$set: {receivedRequests: targetReceivedRequests}}
-      );
+        );
       return false;
     },
 
@@ -385,28 +402,32 @@ if (Meteor.isClient) {
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
-      );
+        );
       Profiles.update(
         {_id: target},
         {$set: {team: targetTeammates}}
-      );
+        );
       return false;
     },
 
     'click #accept': function(event, template){
+      if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
+        alert('Team limit reached');
+        return;
+      }
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       var target = template.find(".respondRequest").getAttribute('data-id');
-      var targetTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
+      var targetTeammates = Profiles.findOne({_id: target}).team;
       myTeammates.push(target);
       targetTeammates.push(Meteor.userId());
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {team: myTeammates}}
-      );
+        );
       Profiles.update(
         {_id: target},
         {$set: {team: targetTeammates}}
-      );
+        );
 
       var myReceivedRequests = Profiles.findOne({_id: Meteor.userId()}).receivedRequests;
       var target = template.find(".respondRequest").getAttribute('data-id');
@@ -422,11 +443,11 @@ if (Meteor.isClient) {
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {receivedRequests: myReceivedRequests}}
-      );
+        );
       Profiles.update(
         {_id: target},
         {$set: {sentRequests: targetSentRequests}}
-      );
+        );
       return false;
     },
 
@@ -445,42 +466,20 @@ if (Meteor.isClient) {
       Profiles.update(
         {_id: Meteor.userId()},
         {$set: {receivedRequests: myReceivedRequests}}
-      );
+        );
       Profiles.update(
         {_id: target},
         {$set: {sentRequests: mySentRequests}}
-      );
+        );
       return false;
     }
 
   });
 
   /****************************** Search *******************************/
-  // Tracker.autorun(function () {
-  //   var cursor = PlayersIndex.search('Marie'); // search all docs that contain "Marie" in the name or score field
-
-  //   console.log(cursor.fetch()); // log found documents with default search limit
-  //   console.log(cursor.count()); // log count of all found documents
-  // });
 
   Template.searchBox.helpers({
     profilesIndex: function(){
-      // var result = [];
-      // //alert(ProfilesIndex.length);
-      // ProfilesIndex.search('').fetch().forEach(function (profile){
-      //   alert("hi");
-      //   var person = Profiles.findOne({_id: profile.__originalId});
-      //   alert('person');
-      //   result.push(person);
-      // })
-      // alert(ProfilesIndex.length);
-      // for(var i = 0; i < ProfilesIndex.length; i++){
-      //   var temp = ProfilesIndex[i];
-      //   var person = Profiles.findOne({_id: temp});
-      //   result.push(person);
-      // }
-      //alert(result);
-      // return result;
       return ProfilesIndex;
     },
     inputAttributes: function(){
@@ -496,6 +495,6 @@ if (Meteor.isClient) {
     }
   });
 
- 
+
 }
 

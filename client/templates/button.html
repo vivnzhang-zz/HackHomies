@@ -1,0 +1,57 @@
+<template name="requestTeam">
+	<form class="requestTeam" data-id="{{_id}}">
+		<!-- <input type="text" name="name" value={{_id}} readonly> -->
+		<button class="ui button" type="submit" name="add-member">Request</button>
+	</form>
+</template>
+
+<template name="disabledRequestTeam">
+	<form class="disabledRequestTeam" data-id="{{_id}}">
+		<!-- <input type="text" name="name" value={{_id}} readonly> -->
+		<button class="ui disabled button" type="submit" name="add-member">Request</button>
+	</form>
+</template>
+
+<template name="removeTeam">
+	<form class="removeTeam" data-id="{{_id}}">
+		<button class="ui button" type="submit" name="remove-member">Remove</button>
+	</form>
+</template>
+
+<template name="respondRequest">
+	<form class="respondRequest" data-id="{{_id}}">
+
+		<div class="ui buttons">
+			<button type="submit" id="accept" class="ui button">
+				<i class="checkmark icon"></i>
+			</button>
+			<button type="submit" id="decline" class="ui button" style="background-color:#f7ab38">
+				<i class="remove icon"></i>
+			</button>
+		</div>
+	</form>
+</template>
+
+<template name="disabledRespondRequest">
+	<form class="respondRequest" data-id="{{_id}}">
+
+		<div class="ui buttons">
+			<button type="submit" id="accept" class="ui disabled button">
+				<i class="checkmark icon"></i>
+			</button>
+			<button type="submit" id="decline" class="ui button" style="background-color:#f7ab38">
+				<i class="remove icon"></i>
+			</button>
+		</div>
+	</form>
+</template>
+
+<template name="deleteRequest">
+	<form class="deleteRequest" data-id="{{_id}}">
+		<button class="ui button" type="submit" name="add-member">Delete</button>
+	</form>
+</template>
+
+<template name="reachedLimit">
+	<p>Team limit reached</p>
+</template>
