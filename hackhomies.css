@@ -43,6 +43,10 @@ body {
   padding-right:25px;
 }
 
+.colortext{
+  color:#1abc9c;
+}
+
 @font-face{
   font-family: 'Lato';
   src: url('/Lato-Regular.ttf') format("truetype");
