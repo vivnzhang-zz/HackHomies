@@ -7,6 +7,17 @@
 		</span>
 	</div>
 
+	{{#if beginner}}
+		beginner
+	{{else}}
+		{{#if amature}}
+			amature
+		{{else}}
+			advanced
+		{{/if}}
+	{{/if}}
+
+
 	<div class="content">
 		<div class="header">{{personName}}</div>
 		<img src="/babyduck1.png" style="width:150px;height:150px; float:center;">
