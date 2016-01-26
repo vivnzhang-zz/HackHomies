@@ -1,4 +1,11 @@
 <template name="fullProfileHelper">
+	<div class="extra content">
+		<span>
+			<a href="/users/{{_id}}/team"><i class="user icon"></i>
+				{{teamsize}}
+			</a>
+		</span>
+	</div>
 	<div class="content">
 		<div class="header">{{personName}}</div>
 		<div class="description">
@@ -10,17 +17,5 @@
 			<p>Interests: {{interests}}</p>
 		</div>
 	</div>
-	<div class="extra content">
-		<span class="right floated">
-			<p>{{year}}</p>
-		</span>
-		<span>
-			<a href="/users/{{_id}}/team"><i class="user icon"></i>
-				{{teamsize}}
-			</a>
-		</span>
-	</div>
-
-	{{> DynamicTemplate template=button}}
-	<br>
+	
 </template>

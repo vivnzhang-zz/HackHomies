@@ -1,20 +1,29 @@
 <template name="fullProfile">
   {{#if compatable}} 
-    <div class="ui card">
-      <img src="/recommendedstar.png" style="width:235.25px;height:56.25px;padding-left:43px;">
+  <div class="ui card">
     <div class="image">
       <img src={{profpic}}>
     </div>
-    <!-- IF STATEMENT -->
+
 
     {{> fullProfileHelper}}
+
+    <div class="extra content">
+      <span>
+        <img src="/recommendedstar.png" style="width:207.02px; height:49.5px; padding-left:10px;">
+      </span>
     </div>
+
+    {{> DynamicTemplate template=button}}
+    <br>
+  </div>
+  
   {{else}}
   <div class="ui card">
     <div class="image">
       <img src={{profpic}}>
     </div>
     {{> fullProfileHelper}}
-    </div>
+  </div>
   {{/if}}
 </template>
