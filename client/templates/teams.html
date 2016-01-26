@@ -3,10 +3,15 @@
 	<div style="text-align:center;">
 		<div style="font-family:'Moon Flower Bold'; font-size:60px;">{{person}} Team</div>
 		<br> 
+
 		{{#if myTeam}}
 		<p><i> See your hack-homies here. Remember, your homies can also approve other homies to be added to your team.</i></p>
+
 		<br>
+		{{#if myTeam}}
 		{{> leaveTeam}}
+		{{else}}
+		<p>Looks like you got no homies :(</p>
 		{{/if}}
 		<br>
 		<div style="text-align:center" class="ui three doubling stackable cards">
