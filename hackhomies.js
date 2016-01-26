@@ -249,6 +249,68 @@ if (Meteor.isClient) {
   });
 
   Template.createProfile.onRendered(function(){
+    $('.ui.dropdown')
+      .dropdown();
+    $('.ui.form')
+      .form({
+        fields: {
+          name: {
+            identifier  : 'name',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your name.'
+              }
+            ]
+          },
+          school: {
+            identifier  : 'school',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your school.'
+              }
+            ]
+          },
+          mySkills: {
+            identifier  : 'mySkills',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your skills'
+              }
+            ]
+          },
+          teamSkills: {
+            identifier  : 'teamSkills',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter skills you are looking for'
+              }
+            ]
+          },
+          experience: {
+            identifier  : 'experience',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your level of experience'
+              }
+            ]
+          },
+          interests: {
+            identifier  : 'interests',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter your interests'
+              }
+            ]
+          }
+        }
+      })
+    ;
     this.$(".ui.fluid.dropdown").dropdown();
     // if(Profiles.findOne({_id: Meteor.userId()})){
     //   this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
