@@ -200,12 +200,15 @@ Template.fullProfileHelper.helpers({
       return;
     } else if(myProfile.team.indexOf(personID) > -1){
       return 'removeTeam';
-    } else if(myProfile.team.length > 3){
-      return 'reachedLimit';
     } else if(myProfile.receivedRequests.indexOf(personID) > -1){
+      if(myProfile.team.length >= 3){
+        return 'disabledRespondRequest';
+      }
       return 'respondRequest';
     } else if(myProfile.sentRequests.indexOf(personID) > -1){
       return 'deleteRequest';
+    } else if (myProfile.team.length >= 3){
+      return 'disabledRequestTeam';
     } else {
       return 'requestTeam';
     }
@@ -267,12 +270,6 @@ Template.fullProfileHelper.helpers({
 
   Template.createProfile.onRendered(function(){
     this.$(".ui.fluid.dropdown").dropdown();
-    // if(Profiles.findOne({_id: Meteor.userId()})){
-    //   this.$(".ui.fluid.dropdown").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).skills);
-    // }
-    // this.$("#mySkills").dropdown();
-    // this.$("#teamSkills").dropdown();
-    // this.$("#interests").dropdown();
     if(Profiles.findOne({_id: Meteor.userId()})){
       this.$(".level").dropdown('set selected',  Profiles.findOne({_id: Meteor.userId()}).level)
       this.$("#mySkills").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).mySkills);
@@ -283,7 +280,10 @@ Template.fullProfileHelper.helpers({
 
   Template.fullProfile.events({
     'submit .requestTeam': function (event) {
-      //must have already created profile
+      if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
+        alert('Team limit reached');
+        return;
+      }
       var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
       //var target = event.target.name.value;
       var target = event.currentTarget.getAttribute('data-id');
@@ -349,6 +349,10 @@ Template.fullProfileHelper.helpers({
     },
 
     'click #accept': function(event, template){
+      if(Profiles.findOne({_id: Meteor.userId()}).team.length >= 3){
+        alert('Team limit reached');
+        return;
+      }
       var myTeammates = Profiles.findOne({_id: Meteor.userId()}).team;
       var target = template.find(".respondRequest").getAttribute('data-id');
       var targetTeammates = Profiles.findOne({_id: target}).team;
