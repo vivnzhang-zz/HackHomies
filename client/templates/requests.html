@@ -1,8 +1,9 @@
 <template name="requests">
 	<div id="requests">
 		
-		<div>
-			<h2>Team Requests</h2> 
+		<div style="text-align:center;">
+			<br>
+			<div style="font-family:'Moon Flower Bold'; font-size:50px;">Team Requests</div> 
 				<div style="text-align:center" class="ui three doubling stackable cards">
 					{{#each received}}
 						{{> fullProfile}}
@@ -10,8 +11,8 @@
 				</div>
 		</div>
 		<br><br>
-		<div>
-			<h2>Pending</h2> 
+		<div style="text-align:center;">
+			<div style="font-family:'Moon Flower Bold'; font-size:50px;">Pending</div> 
 				<div style="text-align:center" class="ui three doubling stackable cards">
 					{{#each sent}}
 						{{> fullProfile}}
