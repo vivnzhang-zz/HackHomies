@@ -293,6 +293,7 @@ Template.fullProfileHelper.helpers({
   });
 
   Template.createProfile.onRendered(function(){
+    this.$(".ui.fluid.dropdown").dropdown();
     $('.ui.dropdown')
       .dropdown();
     $('.ui.form')
@@ -355,7 +356,7 @@ Template.fullProfileHelper.helpers({
         }
       })
     ;
-    this.$(".ui.fluid.dropdown").dropdown();
+    
     if(Profiles.findOne({_id: Meteor.userId()})){
       this.$(".level").dropdown('set selected',  Profiles.findOne({_id: Meteor.userId()}).level)
       this.$("#mySkills").dropdown('set selected', Profiles.findOne({_id: Meteor.userId()}).mySkills);
