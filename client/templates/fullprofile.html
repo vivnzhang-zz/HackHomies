@@ -1,10 +1,6 @@
 <template name="fullProfile">
   {{#if compatable}} 
   <div class="ui card">
-    <div class="image">
-      <img src={{profpic}}>
-    </div>
-
 
     {{> fullProfileHelper}}
 
@@ -20,10 +16,9 @@
   
   {{else}}
   <div class="ui card">
-    <div class="image">
-      <img src={{profpic}}>
-    </div>
+
     {{> fullProfileHelper}}
+    
     {{> DynamicTemplate template=button}}
     <br>
   </div>

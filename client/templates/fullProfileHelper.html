@@ -6,6 +6,16 @@
 			</a>
 		</span>
 	</div>
+	{{#if beginner}}
+		beginner
+	{{else}}
+		{{#if amature}}
+			amature
+		{{else}}
+			advanced
+		{{/if}}
+	{{/if}}
+
 	<div class="content">
 		<div class="header">{{personName}}</div>
 		<div class="description">

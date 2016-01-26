@@ -117,6 +117,33 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.fullProfileHelper.helpers({
+    beginner: function () {
+      alert("beginner");
+        if(Profiles.findOne(this._id).level == 0) {
+          return true;
+        } else {
+          return false;
+        }
+    },
+    amature: function () {
+      alert("amature");
+        if(Profiles.findOne(this._id).level == 1) {
+          return true;
+        } else {
+          return false;
+        }
+    },
+    advanced: function () {
+      alert("advanced");
+        if(Profiles.findOne(this._id).level == 2) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+  });
+
   Template.requests.helpers({
     sent: function () {
       var mySentRequests = Profiles.findOne({_id: Meteor.userId()}).sentRequests;
